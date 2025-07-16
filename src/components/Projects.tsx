@@ -16,7 +16,7 @@ const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
-  const categories = ['All', 'Web Development', 'FinTech', 'Mobile'];
+  const categories = ['All', 'Web Development', 'FinTech', 'Data Science'];
 
   const projects = [
     {
