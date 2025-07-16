@@ -44,8 +44,11 @@ This portfolio is a reflection of my passion for software development, problem-s
 src/
 │
 ├── components/ # Reusable UI components
+
 ├── pages/ # Main pages like Home, About, Projects
+
 ├── assets/ # Images and icons
+
 └── App.tsx # Main app file
 
 ## 📢 Contributing
