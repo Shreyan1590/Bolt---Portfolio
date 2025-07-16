@@ -13,7 +13,6 @@ import Contact from './components/Contact';
 import SmoothScroll from './components/SmoothScroll';
 import { LoadingProvider } from './components/LoadingManager';
 import { useTheme } from './hooks/useTheme';
-import { useScrollDirection } from './hooks/useScrollDirection';
 
 interface Section {
   id: string;
@@ -29,6 +28,7 @@ const SECTIONS: Section[] = [
   { id: 'contact', name: 'Contact' }
 ];
 
+// Only register GSAP plugins in browser environment
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -36,38 +36,33 @@ if (typeof window !== 'undefined') {
 const AppContent = () => {
   const { theme } = useTheme();
   const [activeSection, setActiveSection] = useState<string>(SECTIONS[0].id);
-  const scrollDirection = useScrollDirection();
 
   const setupAnimations = useCallback(() => {
-    gsap.utils.toArray<HTMLElement>('[data-animate]').forEach((element) => {
+    const animateElements = gsap.utils.toArray<HTMLElement>('[data-animate]');
+    
+    animateElements.forEach((element) => {
       ScrollTrigger.create({
         trigger: element,
-        start: 'top 75%',
+        start: 'top 80%',
         once: true,
         onEnter: () => {
           gsap.fromTo(element, 
-            { opacity: 0, y: 40 },
+            { opacity: 0, y: 20 },
             { 
               opacity: 1, 
               y: 0, 
               duration: 0.8,
-              ease: 'power3.out'
+              ease: 'power2.out'
             }
           );
         }
       });
     });
-
-    gsap.to('#main-header', {
-      opacity: 1,
-      duration: 1,
-      delay: 0.5
-    });
   }, []);
 
   const handleScroll = useCallback(() => {
-    const scrollPosition = window.scrollY + window.innerHeight / 3;
-    
+    const scrollPosition = window.scrollY + 100;
+
     for (const section of SECTIONS) {
       const element = document.getElementById(section.id);
       if (element) {
@@ -83,20 +78,14 @@ const AppContent = () => {
   useEffect(() => {
     setupAnimations();
 
-    const debouncedScroll = () => {
-      let timeout: NodeJS.Timeout;
-      return () => {
-        clearTimeout(timeout);
-        timeout = setTimeout(handleScroll, 50);
-      };
+    const scrollListener = () => {
+      requestAnimationFrame(handleScroll);
     };
 
-    window.addEventListener('scroll', debouncedScroll(), { passive: true });
-
+    window.addEventListener('scroll', scrollListener, { passive: true });
     return () => {
-      window.removeEventListener('scroll', debouncedScroll());
+      window.removeEventListener('scroll', scrollListener);
       ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-      gsap.killTweensOf('*');
     };
   }, [setupAnimations, handleScroll]);
 
@@ -112,7 +101,6 @@ const AppContent = () => {
         <Navigation 
           activeSection={activeSection} 
           sections={SECTIONS}
-          scrollDirection={scrollDirection}
         />
         
         <main className="relative z-10">
