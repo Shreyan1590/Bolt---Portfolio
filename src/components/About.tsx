@@ -11,28 +11,28 @@ const About = () => {
 
   const timelineData = [
     {
-      year: '2023 - Present',
+      year: '2024 - Present',
       title: 'B.Tech Computer Science and Biosciences',
-      organization: 'SIMATS Engineering College',
+      organization: 'SIMATS Engineering',
       description: 'Currently pursuing interdisciplinary program combining computer science fundamentals with bioscience applications.',
       icon: GraduationCap,
       color: 'from-cyan-400 to-blue-500'
     },
     {
-      year: '2022 - 2023',
+      year: '2022 - 2024',
       title: 'Higher Secondary Education',
-      organization: 'Senior Secondary School',
-      description: 'Completed with focus on Science stream, laying foundation for engineering studies.',
+      organization: 'Sree Narayana Guru Matric Higher Secondary School',
+      description: 'Completed with focus on Science stream, laying foundation for Computer Science studies.',
       icon: Award,
       color: 'from-purple-400 to-pink-500'
     },
   ];
 
   const achievements = [
-    'Dean\'s List for Academic Excellence',
-    'Active member of Computer Science Society',
-    'Participated in National Science Olympiad',
-    'Volunteer at local biotech awareness programs',
+    'Best Project Award - Online Quiz System with Proctoring',
+    'Active member of Passion Pitch College Club - A Startup Club',
+    'Winner in Inter-College Hackathon - Developed a Expense Tracker & Splitter App',
+    'Opern Source Contributor - Contributed to various projects on GitHub',
   ];
 
   return (
@@ -73,7 +73,7 @@ const About = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <GraduationCap className="text-cyan-400" size={20} />
-                  <span className="text-gray-300">SIMATS Engineering College</span>
+                  <span className="text-gray-300">SIMATS Engineering</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Calendar className="text-purple-400" size={20} />
