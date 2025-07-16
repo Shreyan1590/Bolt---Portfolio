@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import ThemeProvider from './components/ThemeProvider';
@@ -14,109 +14,71 @@ import SmoothScroll from './components/SmoothScroll';
 import { LoadingProvider } from './components/LoadingManager';
 import { useTheme } from './hooks/useTheme';
 
-interface Section {
-  id: string;
-  name: string;
-}
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
-const SECTIONS: Section[] = [
-  { id: 'hero', name: 'Home' },
-  { id: 'about', name: 'About' },
-  { id: 'skills', name: 'Skills' },
-  { id: 'projects', name: 'Projects' },
-  { id: 'research', name: 'Research' },
-  { id: 'contact', name: 'Contact' }
-];
-
-// Only register GSAP plugins in browser environment
-if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-const AppContent = () => {
+function AppContent() {
   const { theme } = useTheme();
-  const [activeSection, setActiveSection] = useState<string>(SECTIONS[0].id);
-
-  const setupAnimations = useCallback(() => {
-    const animateElements = gsap.utils.toArray<HTMLElement>('[data-animate]');
-    
-    animateElements.forEach((element) => {
-      ScrollTrigger.create({
-        trigger: element,
-        start: 'top 80%',
-        once: true,
-        onEnter: () => {
-          gsap.fromTo(element, 
-            { opacity: 0, y: 20 },
-            { 
-              opacity: 1, 
-              y: 0, 
-              duration: 0.8,
-              ease: 'power2.out'
-            }
-          );
-        }
-      });
-    });
-  }, []);
-
-  const handleScroll = useCallback(() => {
-    const scrollPosition = window.scrollY + 100;
-
-    for (const section of SECTIONS) {
-      const element = document.getElementById(section.id);
-      if (element) {
-        const { offsetTop, offsetHeight } = element;
-        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-          setActiveSection(section.id);
-          break;
-        }
-      }
-    }
-  }, []);
+  const [activeSection, setActiveSection] = useState('hero');
 
   useEffect(() => {
-    setupAnimations();
+    // Optimized scroll detection with throttling
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          updateActiveSection();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    
+    const updateActiveSection = () => {
+      const sections = ['hero', 'about', 'skills', 'projects', 'research', 'contact'];
+      const scrollPosition = window.scrollY + 100;
 
-    const scrollListener = () => {
-      requestAnimationFrame(handleScroll);
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
     };
 
-    window.addEventListener('scroll', scrollListener, { passive: true });
-    return () => {
-      window.removeEventListener('scroll', scrollListener);
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
-    };
-  }, [setupAnimations, handleScroll]);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <SmoothScroll>
-      <div className={`min-h-screen overflow-x-hidden transition-colors duration-300 ${
+      <div className={`min-h-screen overflow-x-hidden transition-all duration-800 ${
         theme === 'dark' 
-          ? 'bg-gray-900 text-gray-100' 
+          ? 'bg-gray-900 text-white' 
           : 'bg-blue-50 text-gray-900'
       }`}>
-        <DynamicBackground theme={theme} />
-        
-        <Navigation 
-          activeSection={activeSection} 
-          sections={SECTIONS}
-        />
+        <DynamicBackground />
+        <Navigation activeSection={activeSection} />
         
         <main className="relative z-10">
-          <Hero id="hero" />
-          <About id="about" />
-          <Skills id="skills" />
-          <Projects id="projects" />
-          <Research id="research" />
-          <Contact id="contact" />
+          <Hero />
+          <About />
+          <Skills />
+          <Projects />
+          <Research />
+          <Contact />
         </main>
       </div>
     </SmoothScroll>
   );
-};
+}
 
-const App = () => {
+function App() {
   return (
     <ThemeProvider>
       <LoadingProvider>
@@ -124,6 +86,6 @@ const App = () => {
       </LoadingProvider>
     </ThemeProvider>
   );
-};
+}
 
 export default App;

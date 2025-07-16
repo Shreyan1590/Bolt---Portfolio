@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useForm } from "react-hook-form";
+import { useForm, ValidationError } from "@formspree/react";
 import {
   Mail,
   Phone,
@@ -19,13 +19,7 @@ const Contact = () => {
     threshold: 0.1,
   });
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
+  const [state, handleSubmit] = useForm("xovlqpaa");
 
   const contactInfo = [
     {
@@ -71,24 +65,6 @@ const Contact = () => {
       color: "hover:text-cyan-400",
     },
   ];
-
-  // In your form submission handler
-  const onSubmit = async (data) => {
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        setIsSubmitted(true);
-        reset();
-      }
-    } catch (error) {
-      console.error("Submission error:", error);
-    }
-  };
 
   return (
     <section id="contact" className="py-20 bg-gray-900">
@@ -211,7 +187,7 @@ const Contact = () => {
               Send me a message
             </h3>
 
-            {isSubmitted ? (
+            {state.succeeded ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -226,7 +202,7 @@ const Contact = () => {
                 </p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label
@@ -236,19 +212,19 @@ const Contact = () => {
                       First Name
                     </label>
                     <input
-                      {...register("firstName", {
-                        required: "First name is required",
-                      })}
-                      type="text"
                       id="firstName"
+                      type="text"
+                      name="firstName"
                       className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
                       placeholder="John"
+                      required
                     />
-                    {errors.firstName && (
-                      <p className="text-red-400 text-sm mt-1">
-                        {errors.firstName.message as string}
-                      </p>
-                    )}
+                    <ValidationError 
+                      prefix="First Name" 
+                      field="firstName"
+                      errors={state.errors}
+                      className="text-red-400 text-sm mt-1"
+                    />
                   </div>
 
                   <div>
@@ -259,19 +235,19 @@ const Contact = () => {
                       Last Name
                     </label>
                     <input
-                      {...register("lastName", {
-                        required: "Last name is required",
-                      })}
-                      type="text"
                       id="lastName"
+                      type="text"
+                      name="lastName"
                       className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
                       placeholder="Doe"
+                      required
                     />
-                    {errors.lastName && (
-                      <p className="text-red-400 text-sm mt-1">
-                        {errors.lastName.message as string}
-                      </p>
-                    )}
+                    <ValidationError 
+                      prefix="Last Name" 
+                      field="lastName"
+                      errors={state.errors}
+                      className="text-red-400 text-sm mt-1"
+                    />
                   </div>
                 </div>
 
@@ -283,23 +259,19 @@ const Contact = () => {
                     Email Address
                   </label>
                   <input
-                    {...register("email", {
-                      required: "Email is required",
-                      pattern: {
-                        value: /^\S+@\S+$/i,
-                        message: "Please enter a valid email",
-                      },
-                    })}
-                    type="email"
                     id="email"
+                    type="email"
+                    name="email"
                     className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
                     placeholder="john@example.com"
+                    required
                   />
-                  {errors.email && (
-                    <p className="text-red-400 text-sm mt-1">
-                      {errors.email.message as string}
-                    </p>
-                  )}
+                  <ValidationError 
+                    prefix="Email" 
+                    field="email"
+                    errors={state.errors}
+                    className="text-red-400 text-sm mt-1"
+                  />
                 </div>
 
                 <div>
@@ -310,19 +282,19 @@ const Contact = () => {
                     Subject
                   </label>
                   <input
-                    {...register("subject", {
-                      required: "Subject is required",
-                    })}
-                    type="text"
                     id="subject"
+                    type="text"
+                    name="subject"
                     className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
                     placeholder="Project collaboration"
+                    required
                   />
-                  {errors.subject && (
-                    <p className="text-red-400 text-sm mt-1">
-                      {errors.subject.message as string}
-                    </p>
-                  )}
+                  <ValidationError 
+                    prefix="Subject" 
+                    field="subject"
+                    errors={state.errors}
+                    className="text-red-400 text-sm mt-1"
+                  />
                 </div>
 
                 <div>
@@ -333,29 +305,30 @@ const Contact = () => {
                     Message
                   </label>
                   <textarea
-                    {...register("message", {
-                      required: "Message is required",
-                    })}
                     id="message"
+                    name="message"
                     rows={5}
                     className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors resize-none"
                     placeholder="Tell me about your project or inquiry..."
+                    required
                   />
-                  {errors.message && (
-                    <p className="text-red-400 text-sm mt-1">
-                      {errors.message.message as string}
-                    </p>
-                  )}
+                  <ValidationError 
+                    prefix="Message" 
+                    field="message"
+                    errors={state.errors}
+                    className="text-red-400 text-sm mt-1"
+                  />
                 </div>
 
                 <motion.button
                   type="submit"
+                  disabled={state.submitting}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg font-medium hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 flex items-center justify-center space-x-2"
+                  className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg font-medium hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50"
                 >
                   <Send size={20} />
-                  <span>Send Message</span>
+                  <span>{state.submitting ? 'Sending...' : 'Send Message'}</span>
                 </motion.button>
               </form>
             )}
