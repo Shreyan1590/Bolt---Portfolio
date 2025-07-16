@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+    <meta name="theme-color" content="#111827" />
+    <meta name="description" content="Shreyan - 2nd Year B.Tech Computer Science and Biosciences Student at SIMATS Engineering. Passionate about bridging technology and biology through innovative solutions." />
+    <meta name="keywords" content="Computer Science, Biosciences, SIMATS Engineering, Portfolio, Web Development, Bioinformatics" />
+    <meta name="author" content="Shreyan" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Shreyan - Computer Science & Biosciences Student" />
+    <meta property="og:description" content="2nd Year B.Tech Student at SIMATS Engineering, passionate about bridging technology and biology through innovative solutions." />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:title" content="Shreyan - Computer Science & Biosciences Student" />
+    <meta property="twitter:description" content="2nd Year B.Tech Student at SIMATS Engineering, passionate about bridging technology and biology through innovative solutions." />
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/src/index.css" as="style" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <title>Cutting-Edge Personal Portfolio Website</title>
+    
+    <style>
+      /* Critical CSS for loading screen */
+      body {
+        margin: 0;
+        background-color: #111827;
+        color: white;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      
+      /* Prevent FOUC */
+      .loading-fallback {
+        position: fixed;
+        inset: 0;
+        background: #111827;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript>
+      <div style="text-align: center; padding: 50px; background: #111827; color: white; min-height: 100vh;">
+        <h1>JavaScript Required</h1>
+        <p>This portfolio requires JavaScript to display properly. Please enable JavaScript in your browser.</p>
+      </div>
+    </noscript>
+    
+    <div class="loading-fallback" id="loading-fallback">
+      <div style="text-align: center;">
+        <div style="width: 60px; height: 60px; border: 3px solid #374151; border-top: 3px solid #06b6d4; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+        <p style="color: #9ca3af;">Loading Portfolio...</p>
+      </div>
+    </div>
+    
+    <style>
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    </style>
+    
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <script>
+      // Hide loading fallback when React loads
+      window.addEventListener('load', () => {
+        const fallback = document.getElementById('loading-fallback');
+        if (fallback) {
+          setTimeout(() => {
+            fallback.style.display = 'none';
+          }, 100);
+        }
+      });
+    </script>
+  </body>
+</html>
