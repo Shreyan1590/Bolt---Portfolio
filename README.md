@@ -36,20 +36,7 @@ This portfolio is a reflection of my passion for software development, problem-s
 
 ## 📸 Preview
 
-![Portfolio Preview](https://shreyans-portfolio.vercel.app/preview-image.png)  
-*(Tip: You can replace this with a screenshot of your homepage)*
-
-## 📂 Folder Structure
-
-src/
-│
-├── components/ # Reusable UI components
-
-├── pages/ # Main pages like Home, About, Projects
-
-├── assets/ # Images and icons
-
-└── App.tsx # Main app file
+![Portfolio Preview](https://shreyans-portfolio.vercel.app/)  
 
 ## 📢 Contributing
 
