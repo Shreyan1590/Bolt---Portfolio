@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { useForm } from 'react-hook-form';
-import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, CheckCircle } from 'lucide-react';
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import { useInView } from "react-intersection-observer";
+import { useForm } from "react-hook-form";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Github,
+  Linkedin,
+  Twitter,
+  Send,
+  CheckCircle,
+} from "lucide-react";
 
 const Contact = () => {
   const [ref, inView] = useInView({
@@ -11,63 +20,74 @@ const Contact = () => {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const { register, handleSubmit, formState: { errors }, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
   const contactInfo = [
     {
       icon: Mail,
-      label: 'Email',
-      value: 'shreyanofficial25@gmail.com',
-      href: 'mailto:shreyanofficial25@gmail.com',
-      color: 'from-cyan-400 to-blue-500'
+      label: "Email",
+      value: "shreyanofficial25@gmail.com",
+      href: "mailto:shreyanofficial25@gmail.com",
+      color: "from-cyan-400 to-blue-500",
     },
     {
       icon: Phone,
-      label: 'Phone',
-      value: '+91 9894837250',
-      href: 'tel:+919894837250',
-      color: 'from-green-400 to-teal-500'
+      label: "Phone",
+      value: "+91 9894837250",
+      href: "tel:+919894837250",
+      color: "from-green-400 to-teal-500",
     },
     {
       icon: MapPin,
-      label: 'Location',
-      value: 'Kanchipuram, Tamil Nadu, India',
-      href: '#',
-      color: 'from-purple-400 to-pink-500'
+      label: "Location",
+      value: "Kanchipuram, Tamil Nadu, India",
+      href: "#",
+      color: "from-purple-400 to-pink-500",
     },
   ];
 
   const socialLinks = [
     {
       icon: Github,
-      label: 'GitHub',
-      href: 'https://github.com/shreyan1590',
-      color: 'hover:text-gray-400'
+      label: "GitHub",
+      href: "https://github.com/shreyan1590",
+      color: "hover:text-gray-400",
     },
     {
       icon: Linkedin,
-      label: 'LinkedIn',
-      href: 'https://linkedin.com/in/shreyan_2596',
-      color: 'hover:text-blue-400'
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/shreyan-s2596/",
+      color: "hover:text-blue-400",
     },
     {
       icon: Twitter,
-      label: 'Twitter',
-      href: '#',
-      color: 'hover:text-cyan-400'
+      label: "Twitter",
+      href: "#",
+      color: "hover:text-cyan-400",
     },
   ];
 
-  const onSubmit = async (data: any) => {
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsSubmitted(true);
-    reset();
-    
-    // Reset success message after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false);
-    }, 3000);
+  // In your form submission handler
+  const onSubmit = async (data) => {
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        reset();
+      }
+    } catch (error) {
+      console.error("Submission error:", error);
+    }
   };
 
   return (
@@ -86,8 +106,9 @@ const Contact = () => {
             </span>
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            I'm always open to discussing new opportunities, collaborations, or just having a conversation 
-            about technology and biology. Feel free to reach out!
+            I'm always open to discussing new opportunities, collaborations, or
+            just having a conversation about technology and biology. Feel free
+            to reach out!
           </p>
         </motion.div>
 
@@ -100,7 +121,9 @@ const Contact = () => {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold mb-6 text-white">Contact Information</h3>
+              <h3 className="text-2xl font-bold mb-6 text-white">
+                Contact Information
+              </h3>
               <div className="space-y-4">
                 {contactInfo.map((info, index) => (
                   <motion.a
@@ -111,7 +134,9 @@ const Contact = () => {
                     transition={{ duration: 0.6, delay: 0.1 * index }}
                     className="flex items-center space-x-4 p-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-all duration-300 group"
                   >
-                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${info.color} flex items-center justify-center`}>
+                    <div
+                      className={`w-12 h-12 rounded-lg bg-gradient-to-r ${info.color} flex items-center justify-center`}
+                    >
                       <info.icon size={24} className="text-white" />
                     </div>
                     <div>
@@ -127,7 +152,9 @@ const Contact = () => {
 
             {/* Social Media */}
             <div>
-              <h3 className="text-2xl font-bold mb-6 text-white">Connect on Social Media</h3>
+              <h3 className="text-2xl font-bold mb-6 text-white">
+                Connect on Social Media
+              </h3>
               <div className="flex space-x-4">
                 {socialLinks.map((social, index) => (
                   <motion.a
@@ -153,15 +180,21 @@ const Contact = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span className="text-gray-300">Available for internships</span>
+                  <span className="text-gray-300">
+                    Available for internships
+                  </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
-                  <span className="text-gray-300">Open to research collaborations</span>
+                  <span className="text-gray-300">
+                    Open to research collaborations
+                  </span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  <span className="text-gray-300">Interested in freelance projects</span>
+                  <span className="text-gray-300">
+                    Interested in freelance projects
+                  </span>
                 </div>
               </div>
             </div>
@@ -174,8 +207,10 @@ const Contact = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="bg-gray-800 rounded-xl p-8 border border-gray-700"
           >
-            <h3 className="text-2xl font-bold mb-6 text-white">Send me a message</h3>
-            
+            <h3 className="text-2xl font-bold mb-6 text-white">
+              Send me a message
+            </h3>
+
             {isSubmitted ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -183,56 +218,77 @@ const Contact = () => {
                 className="text-center py-8"
               >
                 <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
-                <h4 className="text-xl font-semibold text-white mb-2">Message Sent!</h4>
-                <p className="text-gray-300">Thank you for reaching out. I'll get back to you soon.</p>
+                <h4 className="text-xl font-semibold text-white mb-2">
+                  Message Sent!
+                </h4>
+                <p className="text-gray-300">
+                  Thank you for reaching out. I'll get back to you soon.
+                </p>
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label
+                      htmlFor="firstName"
+                      className="block text-sm font-medium text-gray-300 mb-2"
+                    >
                       First Name
                     </label>
                     <input
-                      {...register('firstName', { required: 'First name is required' })}
+                      {...register("firstName", {
+                        required: "First name is required",
+                      })}
                       type="text"
                       id="firstName"
                       className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
                       placeholder="John"
                     />
                     {errors.firstName && (
-                      <p className="text-red-400 text-sm mt-1">{errors.firstName.message as string}</p>
+                      <p className="text-red-400 text-sm mt-1">
+                        {errors.firstName.message as string}
+                      </p>
                     )}
                   </div>
-                  
+
                   <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-300 mb-2">
+                    <label
+                      htmlFor="lastName"
+                      className="block text-sm font-medium text-gray-300 mb-2"
+                    >
                       Last Name
                     </label>
                     <input
-                      {...register('lastName', { required: 'Last name is required' })}
+                      {...register("lastName", {
+                        required: "Last name is required",
+                      })}
                       type="text"
                       id="lastName"
                       className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
                       placeholder="Doe"
                     />
                     {errors.lastName && (
-                      <p className="text-red-400 text-sm mt-1">{errors.lastName.message as string}</p>
+                      <p className="text-red-400 text-sm mt-1">
+                        {errors.lastName.message as string}
+                      </p>
                     )}
                   </div>
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-300 mb-2"
+                  >
                     Email Address
                   </label>
                   <input
-                    {...register('email', { 
-                      required: 'Email is required',
+                    {...register("email", {
+                      required: "Email is required",
                       pattern: {
                         value: /^\S+@\S+$/i,
-                        message: 'Please enter a valid email'
-                      }
+                        message: "Please enter a valid email",
+                      },
                     })}
                     type="email"
                     id="email"
@@ -240,39 +296,55 @@ const Contact = () => {
                     placeholder="john@example.com"
                   />
                   {errors.email && (
-                    <p className="text-red-400 text-sm mt-1">{errors.email.message as string}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.email.message as string}
+                    </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="subject" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label
+                    htmlFor="subject"
+                    className="block text-sm font-medium text-gray-300 mb-2"
+                  >
                     Subject
                   </label>
                   <input
-                    {...register('subject', { required: 'Subject is required' })}
+                    {...register("subject", {
+                      required: "Subject is required",
+                    })}
                     type="text"
                     id="subject"
                     className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
                     placeholder="Project collaboration"
                   />
                   {errors.subject && (
-                    <p className="text-red-400 text-sm mt-1">{errors.subject.message as string}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.subject.message as string}
+                    </p>
                   )}
                 </div>
 
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                  <label
+                    htmlFor="message"
+                    className="block text-sm font-medium text-gray-300 mb-2"
+                  >
                     Message
                   </label>
                   <textarea
-                    {...register('message', { required: 'Message is required' })}
+                    {...register("message", {
+                      required: "Message is required",
+                    })}
                     id="message"
                     rows={5}
                     className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors resize-none"
                     placeholder="Tell me about your project or inquiry..."
                   />
                   {errors.message && (
-                    <p className="text-red-400 text-sm mt-1">{errors.message.message as string}</p>
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.message.message as string}
+                    </p>
                   )}
                 </div>
 
