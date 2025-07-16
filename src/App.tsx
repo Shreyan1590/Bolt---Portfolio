@@ -12,7 +12,6 @@ import Research from './components/Research';
 import Contact from './components/Contact';
 import SmoothScroll from './components/SmoothScroll';
 import { LoadingProvider } from './components/LoadingManager';
-import Footer from './components/Footer';
 import { useTheme } from './hooks/useTheme';
 import { useScrollDirection } from './hooks/useScrollDirection';
 
@@ -124,8 +123,6 @@ const AppContent = () => {
           <Research id="research" />
           <Contact id="contact" />
         </main>
-
-        <Footer />
       </div>
     </SmoothScroll>
   );
