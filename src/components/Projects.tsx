@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import InteractiveCard from './InteractiveCard';
 import ResponsiveImage from './ResponsiveImage';
-import { Github, ExternalLink, Code, Database, Microscope, Brain, Filter } from 'lucide-react';
+import { Github, ExternalLink, Code, LineChart, Filter, Building } from 'lucide-react';
 
 const Projects = () => {
   const [ref, inView] = useInView({
@@ -16,86 +16,47 @@ const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
-  const categories = ['All', 'Web Development', 'Bioinformatics', 'Data Science', 'Mobile'];
+  const categories = ['All', 'Web Development', 'FinTech', 'Mobile'];
 
   const projects = [
     {
       id: 1,
-      title: 'Genomic Sequence Analyzer',
-      category: 'Bioinformatics',
-      description: 'A comprehensive tool for analyzing DNA sequences with pattern recognition and mutation detection capabilities.',
-      longDescription: 'This bioinformatics application provides researchers with advanced tools for genomic analysis. Features include sequence alignment, mutation detection, phylogenetic analysis, and visualization of genetic patterns. Built with Python and BioPython, it processes large genomic datasets efficiently.',
-      image: 'https://images.pexels.com/photos/3825580/pexels-photo-3825580.jpeg?auto=compress&cs=tinysrgb&w=500',
-      technologies: ['Python', 'BioPython', 'NumPy', 'Matplotlib', 'Pandas'],
+      title: 'Banking Application',
+      category: 'FinTech',
+      description: 'Shreyan Bank is a simple and interactive banking application simulation that allows users to experience basic digital banking operations like deposits, withdrawals, and transaction history through a clean and responsive interface.',
+      longDescription: 'Shreyan Bank is a simple digital banking simulator that lets users check balances, deposit, withdraw, and view transaction history in real-time. It features a clean, responsive interface with quick performance, making it a smooth and educational tool for learning basic banking operations.',
+      image: 'https://static.vecteezy.com/system/resources/previews/018/754/407/non_2x/mobile-banking-app-concept-free-vector.jpg',
+      technologies: ['React', 'Typescript', 'Tailwind CSS', 'Javascript', 'Node.js'],
       github: '#',
-      live: '#',
-      icon: Microscope,
+      live: 'https://shreyan-bank.netlify.app/',
+      icon: Building,
       color: 'from-green-400 to-teal-500'
     },
     {
       id: 2,
-      title: 'React Task Management App',
+      title: 'Online Quiz System with Proctoring',
       category: 'Web Development',
-      description: 'A modern task management application with real-time collaboration features and intuitive UI.',
-      longDescription: 'Full-stack web application for team collaboration and task management. Features include real-time updates, user authentication, project organization, and analytics dashboard. Built with React, Node.js, and MongoDB.',
-      image: 'https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=500',
+      description: 'QuizzyNet Pro is a modern and interactive online quiz application that allows users to take engaging quizzes with a clean and responsive interface, providing instant feedback and performance tracking.',
+      longDescription: 'QuizzyNet Pro is a fast and user-friendly online quiz platform designed for effortless learning and assessment. It offers a clean, responsive interface that works smoothly on all devices, with real-time timers and instant result feedback. Users can take quizzes without the need to sign up, making it quick and accessible. Built on a high-speed serverless system, QuizzyNet Pro ensures fast load times and a seamless experience for students, teachers, and casual learners alike.',
+      image: 'https://www.cipcourses.com/wp-content/uploads/2022/06/How-does-a-proctored-exam-work.png',
       technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'Tailwind CSS'],
       github: '#',
-      live: '#',
+      live: 'https://quizzynet-pro.netlify.app/',
       icon: Code,
       color: 'from-blue-400 to-purple-500'
     },
     {
       id: 3,
-      title: 'Disease Prediction ML Model',
+      title: 'Energy Consumption Prediction',
       category: 'Data Science',
       description: 'Machine learning model for early disease prediction using patient data and symptoms analysis.',
-      longDescription: 'Advanced machine learning system that analyzes patient symptoms and medical history to predict potential diseases. Uses ensemble methods and feature engineering to achieve high accuracy. Includes a web interface for healthcare professionals.',
+      longDescription: 'Advanced machine learning system that analyzes energy consumption and prediction. Uses ensemble methods and feature engineering to achieve high accuracy. Includes a web interface for ML professionals.',
       image: 'https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=500',
       technologies: ['Python', 'Scikit-learn', 'Flask', 'PostgreSQL', 'TensorFlow'],
       github: '#',
       live: '#',
-      icon: Brain,
+      icon: LineChart,
       color: 'from-red-400 to-pink-500'
-    },
-    {
-      id: 4,
-      title: 'Protein Structure Visualizer',
-      category: 'Bioinformatics',
-      description: '3D protein structure visualization tool with interactive molecular analysis features.',
-      longDescription: 'Interactive web application for visualizing and analyzing protein structures. Features include 3D rendering, molecular docking simulation, and structural comparison tools. Designed for researchers and students in structural biology.',
-      image: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=500',
-      technologies: ['Three.js', 'React', 'WebGL', 'PDB Parser', 'D3.js'],
-      github: '#',
-      live: '#',
-      icon: Microscope,
-      color: 'from-cyan-400 to-blue-500'
-    },
-    {
-      id: 5,
-      title: 'Student Portal System',
-      category: 'Web Development',
-      description: 'Complete student management system with course enrollment, grades, and communication features.',
-      longDescription: 'Comprehensive web platform for educational institutions. Includes student registration, course management, grade tracking, assignment submission, and communication tools. Built with modern web technologies and responsive design.',
-      image: 'https://images.pexels.com/photos/1181533/pexels-photo-1181533.jpeg?auto=compress&cs=tinysrgb&w=500',
-      technologies: ['React', 'Express.js', 'MySQL', 'JWT', 'Bootstrap'],
-      github: '#',
-      live: '#',
-      icon: Database,
-      color: 'from-purple-400 to-indigo-500'
-    },
-    {
-      id: 6,
-      title: 'Biometric Analysis Dashboard',
-      category: 'Data Science',
-      description: 'Real-time biometric data analysis with machine learning insights and health monitoring.',
-      longDescription: 'Advanced dashboard for analyzing biometric data from wearable devices. Provides real-time monitoring, trend analysis, and health insights using machine learning algorithms. Includes predictive analytics for health risk assessment.',
-      image: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=500',
-      technologies: ['Python', 'Streamlit', 'Pandas', 'Plotly', 'Redis'],
-      github: '#',
-      live: '#',
-      icon: Brain,
-      color: 'from-orange-400 to-red-500'
     },
   ];
 
