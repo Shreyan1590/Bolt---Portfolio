@@ -16,7 +16,7 @@ const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
       direction: 'vertical',
       smooth: true,
       mouseMultiplier: 1,
-      smoothTouch: false, // Disable on touch devices for better performance
+      smoothTouch: true, // Disable on touch devices for better performance
       touchMultiplier: 2,
       infinite: false,
     });
