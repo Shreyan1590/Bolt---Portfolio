@@ -9,6 +9,9 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  "engines": {
+    "node": "22.17.1"
+  },
   "dependencies": {
     "@react-spring/web": "^10.0.1",
     "@types/three": "^0.178.1",
