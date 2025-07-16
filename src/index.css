@@ -32,6 +32,7 @@
 
 html {
   scroll-behavior: auto; /* Let Lenis handle smooth scrolling */
+  overflow: visible;
 }
 
 body {
@@ -41,6 +42,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow: visible;
+  scroll-behavior: auto;
   overflow-x: hidden;
   transition: var(--transition-theme);
 }

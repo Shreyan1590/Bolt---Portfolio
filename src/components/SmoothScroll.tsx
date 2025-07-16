@@ -9,32 +9,19 @@ const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
   const lenisRef = useRef<Lenis>();
 
   useEffect(() => {
-    // Initialize Lenis with optimized settings
     const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: "vertical",
       smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: true, // Enable on touch devices
-      touchMultiplier: 2, // Adjust as needed
-      infinite: false,
+      smoothTouch: true,
+      touchMultiplier: 1.5,
     });
 
-    lenisRef.current = lenis;
-
-    // Animation frame loop
-    function raf(time: number) {
+    const raf = (time: number) => {
       lenis.raf(time);
       requestAnimationFrame(raf);
-    }
-
+    };
     requestAnimationFrame(raf);
 
-    // Cleanup
-    return () => {
-      lenis.destroy();
-    };
+    return () => lenis.destroy();
   }, []);
 
   // Expose scroll methods globally
