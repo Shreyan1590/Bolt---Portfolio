@@ -27,7 +27,7 @@ This portfolio is a reflection of my passion for software development, problem-s
 ## 🛠️ Built With
 
 - **React.js** – Frontend Library  
-- **Vite** – Blazing fast build tool  
+- **Vite** – Blazing fast build tool 
 - **TypeScript** – Type safety and cleaner code  
 - **TailwindCSS** – Rapid styling with utility-first CSS  
 - **React Router** – Smooth page navigation  
@@ -57,9 +57,9 @@ Feel free to open an issue if you have suggestions for improvements.
 
 If you’d like to discuss opportunities or just want to connect:
 
-- 📬 **Email:** shreyansyourmail@gmail.com  
-- 💼 **LinkedIn:** [Your LinkedIn URL]  
-- 💻 **GitHub:** [https://github.com/shreyan-s](https://github.com/shreyan-s)  
+- 📬 **Email:** shreyanofficial25@gmail.com  
+- 💼 **LinkedIn:** https://www.linkedin.com/in/shreyan-s2596/  
+- 💻 **GitHub:** [https://github.com/shreyan1590](https://github.com/shreyan1590)  
 
 ---
 
