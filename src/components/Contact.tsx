@@ -1,7 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { useForm, ValidationError } from "@formspree/react";
 import {
   Mail,
   Phone,
@@ -19,7 +18,57 @@ const Contact = () => {
     threshold: 0.1,
   });
 
-  const [state, handleSubmit] = useForm("xovlqpaa");
+  const [formData, setFormData] = React.useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+  const [isSubmitted, setIsSubmitted] = React.useState(false);
+  const [isSubmitting, setIsSubmitting] = React.useState(false);
+  const [error, setError] = React.useState('');
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const response = await fetch('https://formspree.io/f/xovlqpaa', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        throw new Error('Form submission failed');
+      }
+    } catch (err) {
+      setError('Failed to send message. Please try again later.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const contactInfo = [
     {
@@ -143,6 +192,8 @@ const Contact = () => {
                     whileTap={{ scale: 0.9 }}
                     className={`w-14 h-14 bg-gray-800 rounded-lg flex items-center justify-center text-gray-300 ${social.color} transition-all duration-300 hover:bg-gray-700`}
                     aria-label={social.label}
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
                     <social.icon size={24} />
                   </motion.a>
@@ -187,7 +238,7 @@ const Contact = () => {
               Send me a message
             </h3>
 
-            {state.succeeded ? (
+            {isSubmitted ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -203,6 +254,11 @@ const Contact = () => {
               </motion.div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
+                {error && (
+                  <div className="p-3 bg-red-900/50 text-red-200 rounded-lg">
+                    {error}
+                  </div>
+                )}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label
@@ -215,15 +271,11 @@ const Contact = () => {
                       id="firstName"
                       type="text"
                       name="firstName"
+                      value={formData.firstName}
+                      onChange={handleChange}
                       className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
                       placeholder="John"
                       required
-                    />
-                    <ValidationError 
-                      prefix="First Name" 
-                      field="firstName"
-                      errors={state.errors}
-                      className="text-red-400 text-sm mt-1"
                     />
                   </div>
 
@@ -238,15 +290,11 @@ const Contact = () => {
                       id="lastName"
                       type="text"
                       name="lastName"
+                      value={formData.lastName}
+                      onChange={handleChange}
                       className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
                       placeholder="Doe"
                       required
-                    />
-                    <ValidationError 
-                      prefix="Last Name" 
-                      field="lastName"
-                      errors={state.errors}
-                      className="text-red-400 text-sm mt-1"
                     />
                   </div>
                 </div>
@@ -262,15 +310,11 @@ const Contact = () => {
                     id="email"
                     type="email"
                     name="email"
+                    value={formData.email}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
                     placeholder="john@example.com"
                     required
-                  />
-                  <ValidationError 
-                    prefix="Email" 
-                    field="email"
-                    errors={state.errors}
-                    className="text-red-400 text-sm mt-1"
                   />
                 </div>
 
@@ -285,15 +329,11 @@ const Contact = () => {
                     id="subject"
                     type="text"
                     name="subject"
+                    value={formData.subject}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
                     placeholder="Project collaboration"
                     required
-                  />
-                  <ValidationError 
-                    prefix="Subject" 
-                    field="subject"
-                    errors={state.errors}
-                    className="text-red-400 text-sm mt-1"
                   />
                 </div>
 
@@ -308,27 +348,23 @@ const Contact = () => {
                     id="message"
                     name="message"
                     rows={5}
+                    value={formData.message}
+                    onChange={handleChange}
                     className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors resize-none"
                     placeholder="Tell me about your project or inquiry..."
                     required
-                  />
-                  <ValidationError 
-                    prefix="Message" 
-                    field="message"
-                    errors={state.errors}
-                    className="text-red-400 text-sm mt-1"
                   />
                 </div>
 
                 <motion.button
                   type="submit"
-                  disabled={state.submitting}
+                  disabled={isSubmitting}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg font-medium hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50"
                 >
                   <Send size={20} />
-                  <span>{state.submitting ? 'Sending...' : 'Send Message'}</span>
+                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
                 </motion.button>
               </form>
             )}
