@@ -49,7 +49,7 @@ const Projects = () => {
       id: 3,
       title: 'Energy Consumption Prediction',
       category: 'Data Science',
-      description: 'This AI system predicts diseases early by analyzing patient data and symptoms. It detects risks for chronic illnesses and cancer using machine learning. The tool helps doctors enable preventive care and reduce costs.',
+      description: 'This AI-powered system predicts diseases early by analyzing patient records, symptoms, and lab data using machine learning. It generates explainable risk scores to help doctors detect chronic conditions, cancer risks, and neurological disorders sooner. The solution integrates with medical systems to enable preventive care and reduce treatment costs.',
       longDescription: 'This AI-powered energy forecasting system uses advanced machine learning to analyze consumption patterns and predict demand with high accuracy. It combines smart meter data, weather inputs, and IoT sensor readings through automated feature engineering and ensemble modeling. The web interface lets data scientists build, compare, and deploy models with explainable AI insights, while the scalable backend handles large datasets and production workflows.',
       image: 'https://ars.els-cdn.com/content/image/1-s2.0-S266616592030034X-fx1.jpg',
       technologies: ['Python', 'Scikit-learn', 'Flask', 'PostgreSQL', 'TensorFlow'],
