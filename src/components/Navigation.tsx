@@ -61,7 +61,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
                   key={item.id}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={() => (window as any).scrollTo(`#${item.id}`)}
+                  onClick={() => scrollTo(item.id)}
                   className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
                     activeSection === item.id
                       ? theme === 'dark'
