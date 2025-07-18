@@ -2,8 +2,10 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Code, Database, Microscope, Brain, Server, Palette } from 'lucide-react';
+import { useTheme } from '../hooks/useTheme';
 
 const Skills = () => {
+  const { theme } = useTheme();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -92,22 +94,38 @@ const Skills = () => {
       className="mb-4"
     >
       <div className="flex justify-between items-center mb-2">
-        <span className="text-gray-300 font-medium">{skill.name}</span>
-        <span className="text-cyan-400 text-sm">{skill.level}%</span>
+        <span className={`font-medium transition-all duration-300 ${
+          theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+        }`}>
+          {skill.name}
+        </span>
+        <span className={`text-sm transition-all duration-300 ${
+          theme === 'dark' ? 'text-cyan-400' : 'text-orange-500'
+        }`}>
+          {skill.level}%
+        </span>
       </div>
-      <div className="w-full bg-gray-700 rounded-full h-2">
+      <div className={`w-full rounded-full h-2 transition-all duration-300 ${
+        theme === 'dark' ? 'bg-gray-700' : 'bg-gray-200'
+      }`}>
         <motion.div
           initial={{ width: 0 }}
           animate={inView ? { width: `${skill.level}%` } : {}}
           transition={{ duration: 1, delay: 0.2 * index }}
-          className="h-2 bg-gradient-to-r from-cyan-400 to-purple-400 rounded-full"
+          className={`h-2 rounded-full transition-all duration-300 ${
+            theme === 'dark'
+              ? 'bg-gradient-to-r from-cyan-400 to-purple-400'
+              : 'bg-gradient-to-r from-orange-400 to-pink-400'
+          }`}
         />
       </div>
     </motion.div>
   );
 
   return (
-    <section id="skills" className="py-20 bg-gray-800">
+    <section id="skills" className={`py-20 transition-all duration-800 ${
+      theme === 'dark' ? 'bg-gray-800' : 'bg-blue-50'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -117,11 +135,17 @@ const Skills = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+            <span className={`transition-all duration-300 ${
+              theme === 'dark'
+                ? 'bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent'
+                : 'bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent'
+            }`}>
               Technical Skills
             </span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className={`text-xl max-w-3xl mx-auto transition-all duration-300 ${
+            theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+          }`}>
             A comprehensive overview of my technical expertise spanning computer science, 
             bioinformatics, and interdisciplinary technologies.
           </p>
@@ -134,13 +158,21 @@ const Skills = () => {
               initial={{ opacity: 0, y: 50 }}
               animate={inView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.8, delay: 0.2 * categoryIndex }}
-              className="bg-gray-900 rounded-xl p-6 border border-gray-700 hover:border-cyan-400/50 transition-all duration-300"
+              className={`rounded-xl p-6 border transition-all duration-300 ${
+                theme === 'dark'
+                  ? 'bg-gray-900 border-gray-700 hover:border-cyan-400/50'
+                  : 'bg-white border-gray-200 hover:border-orange-400/50 shadow-lg'
+              }`}
             >
               <div className="flex items-center space-x-3 mb-6">
                 <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${category.color} flex items-center justify-center`}>
                   <category.icon size={24} className="text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-white">{category.title}</h3>
+                <h3 className={`text-xl font-bold transition-all duration-300 ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}>
+                  {category.title}
+                </h3>
               </div>
 
               <div className="space-y-4">
@@ -159,7 +191,11 @@ const Skills = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="mt-16 text-center"
         >
-          <h3 className="text-2xl font-bold mb-8 text-cyan-400">Additional Competencies</h3>
+          <h3 className={`text-2xl font-bold mb-8 transition-all duration-300 ${
+            theme === 'dark' ? 'text-cyan-400' : 'text-orange-500'
+          }`}>
+            Additional Competencies
+          </h3>
           <div className="flex flex-wrap justify-center gap-4">
             {[
               'Agile Development', 'Team Leadership', 'Technical Writing', 'Problem Solving',
@@ -170,7 +206,11 @@ const Skills = () => {
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={inView ? { opacity: 1, scale: 1 } : {}}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
-                className="px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 rounded-full text-cyan-300 text-sm hover:bg-gradient-to-r hover:from-cyan-500/30 hover:to-purple-500/30 transition-all duration-300"
+                className={`px-4 py-2 rounded-full text-sm transition-all duration-300 ${
+                  theme === 'dark'
+                    ? 'bg-gradient-to-r from-cyan-500/20 to-purple-500/20 border border-cyan-400/30 text-cyan-300 hover:from-cyan-500/30 hover:to-purple-500/30'
+                    : 'bg-gradient-to-r from-orange-500/20 to-pink-500/20 border border-orange-400/30 text-orange-600 hover:from-orange-500/30 hover:to-pink-500/30'
+                }`}
               >
                 {skill}
               </motion.span>

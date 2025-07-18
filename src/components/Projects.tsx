@@ -4,9 +4,11 @@ import { useInView } from 'react-intersection-observer';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import InteractiveCard from './InteractiveCard';
 import ResponsiveImage from './ResponsiveImage';
-import { Github, ExternalLink, Code, LineChart, Filter, Building } from 'lucide-react';
+import { Github, ExternalLink, Code, Database, Microscope, Brain, Filter } from 'lucide-react';
+import { useTheme } from '../hooks/useTheme';
 
 const Projects = () => {
+  const { theme } = useTheme();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -71,6 +73,11 @@ const Projects = () => {
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.6, delay: 0.1 * index }}
         className="bg-gray-900 rounded-xl overflow-hidden border border-gray-700 hover:border-cyan-400/50 transition-all duration-300 group h-full flex flex-col"
+        className={`rounded-xl overflow-hidden border transition-all duration-300 group h-full flex flex-col ${
+          theme === 'dark'
+            ? 'bg-gray-900 border-gray-700 hover:border-cyan-400/50'
+            : 'bg-white border-gray-200 hover:border-orange-400/50 shadow-lg'
+        }`}
       >
         <div className="relative overflow-hidden h-48">
           <ResponsiveImage
@@ -79,22 +86,34 @@ const Projects = () => {
             className="w-full h-full transition-transform duration-300 group-hover:scale-110"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent opacity-60" />
+          <div className={`absolute inset-0 bg-gradient-to-t to-transparent opacity-60 ${
+            theme === 'dark' ? 'from-gray-900' : 'from-white'
+          }`} />
           <div className={`absolute top-4 right-4 w-12 h-12 rounded-full bg-gradient-to-r ${project.color} flex items-center justify-center`}>
             <project.icon size={24} className="text-white" />
           </div>
         </div>
         <div className="p-6 flex-1 flex flex-col">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-cyan-400 bg-cyan-400/10 px-2 py-1 rounded">
+            <span className={`text-xs font-medium px-2 py-1 rounded transition-all duration-300 ${
+              theme === 'dark'
+                ? 'text-cyan-400 bg-cyan-400/10'
+                : 'text-orange-500 bg-orange-500/10'
+            }`}>
               {project.category}
             </span>
           </div>
-          <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">
+          <h3 className={`text-xl font-bold mb-3 transition-colors ${
+            theme === 'dark'
+              ? 'text-white group-hover:text-cyan-400'
+              : 'text-gray-900 group-hover:text-orange-500'
+          }`}>
             {project.title}
           </h3>
 
-          <p className="text-gray-300 mb-4 flex-1">
+          <p className={`mb-4 flex-1 transition-all duration-300 ${
+            theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+          }`}>
             {project.description}
           </p>
 
@@ -102,13 +121,21 @@ const Projects = () => {
             {project.technologies.slice(0, 3).map((tech, techIndex) => (
               <span
                 key={techIndex}
-                className="text-xs bg-purple-500/20 text-purple-300 px-2 py-1 rounded border border-purple-500/30"
+                className={`text-xs px-2 py-1 rounded border transition-all duration-300 ${
+                  theme === 'dark'
+                    ? 'bg-purple-500/20 text-purple-300 border-purple-500/30'
+                    : 'bg-pink-500/20 text-pink-600 border-pink-500/30'
+                }`}
               >
                 {tech}
               </span>
             ))}
             {project.technologies.length > 3 && (
-              <span className="text-xs bg-gray-700 text-gray-300 px-2 py-1 rounded">
+              <span className={`text-xs px-2 py-1 rounded transition-all duration-300 ${
+                theme === 'dark'
+                  ? 'bg-gray-700 text-gray-300'
+                  : 'bg-gray-200 text-gray-600'
+              }`}>
                 +{project.technologies.length - 3} more
               </span>
             )}
@@ -120,17 +147,29 @@ const Projects = () => {
                 href={project.github}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
+                className={`p-2 rounded-lg transition-colors ${
+                  theme === 'dark'
+                    ? 'bg-gray-800 hover:bg-gray-700'
+                    : 'bg-gray-100 hover:bg-gray-200'
+                }`}
               >
-                <Github size={20} className="text-gray-300" />
+                <Github size={20} className={`transition-all duration-300 ${
+                  theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                }`} />
               </motion.a>
               <motion.a
                 href={project.live}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
-                className="p-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
+                className={`p-2 rounded-lg transition-colors ${
+                  theme === 'dark'
+                    ? 'bg-gray-800 hover:bg-gray-700'
+                    : 'bg-gray-100 hover:bg-gray-200'
+                }`}
               >
-                <ExternalLink size={20} className="text-gray-300" />
+                <ExternalLink size={20} className={`transition-all duration-300 ${
+                  theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
+                }`} />
               </motion.a>
             </div>
 
@@ -138,7 +177,11 @@ const Projects = () => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setSelectedProject(project.id)}
-              className="px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg text-sm font-medium hover:from-cyan-600 hover:to-purple-600 transition-all duration-300"
+              className={`px-4 py-2 text-white rounded-lg text-sm font-medium transition-all duration-300 ${
+                theme === 'dark'
+                  ? 'bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600'
+                  : 'bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600'
+              }`}
             >
               View Details
             </motion.button>
@@ -149,7 +192,9 @@ const Projects = () => {
   );
 
   return (
-    <section id="projects" ref={projectsRef} className="py-20 bg-gray-900">
+    <section id="projects" ref={projectsRef} className={`py-20 transition-all duration-800 ${
+      theme === 'dark' ? 'bg-gray-900' : 'bg-white'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -159,11 +204,17 @@ const Projects = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+            <span className={`transition-all duration-300 ${
+              theme === 'dark'
+                ? 'bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent'
+                : 'bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent'
+            }`}>
               Featured Projects
             </span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className={`text-xl max-w-3xl mx-auto transition-all duration-300 ${
+            theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+          }`}>
             A showcase of my work spanning web development, bioinformatics, and data science projects 
             that demonstrate my interdisciplinary approach to problem-solving.
           </p>
@@ -177,8 +228,14 @@ const Projects = () => {
           className="flex flex-wrap justify-center gap-3 mb-12"
         >
           <div className="flex items-center space-x-2 mb-4">
-            <Filter size={20} className="text-cyan-400" />
-            <span className="text-gray-300">Filter by category:</span>
+            <Filter size={20} className={`transition-all duration-300 ${
+              theme === 'dark' ? 'text-cyan-400' : 'text-orange-500'
+            }`} />
+            <span className={`transition-all duration-300 ${
+              theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+            }`}>
+              Filter by category:
+            </span>
           </div>
           <div className="flex flex-wrap gap-2">
             {categories.map((category) => (
@@ -189,8 +246,12 @@ const Projects = () => {
                 onClick={() => setSelectedCategory(category)}
                 className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
                   selectedCategory === category
-                    ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white'
-                    : 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                    ? theme === 'dark'
+                      ? 'bg-gradient-to-r from-cyan-500 to-purple-500 text-white'
+                      : 'bg-gradient-to-r from-orange-500 to-pink-500 text-white'
+                    : theme === 'dark'
+                      ? 'bg-gray-800 text-gray-300 hover:bg-gray-700'
+                      : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 }`}
               >
                 {category}
@@ -230,7 +291,11 @@ const Projects = () => {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.8, opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="bg-gray-900 rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-gray-700"
+                className={`rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border transition-all duration-300 ${
+                  theme === 'dark'
+                    ? 'bg-gray-900 border-gray-700'
+                    : 'bg-white border-gray-200'
+                }`}
                 onClick={(e) => e.stopPropagation()}
               >
                 {(() => {
@@ -245,10 +310,16 @@ const Projects = () => {
                           alt={project.title}
                           className="w-full h-64 object-cover"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent" />
+                        <div className={`absolute inset-0 bg-gradient-to-t to-transparent ${
+                          theme === 'dark' ? 'from-gray-900' : 'from-white'
+                        }`} />
                         <button
                           onClick={() => setSelectedProject(null)}
-                          className="absolute top-4 right-4 w-8 h-8 bg-gray-800/80 rounded-full flex items-center justify-center text-white hover:bg-gray-700 transition-colors"
+                          className={`absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white transition-colors ${
+                            theme === 'dark'
+                              ? 'bg-gray-800/80 hover:bg-gray-700'
+                              : 'bg-gray-600/80 hover:bg-gray-500'
+                          }`}
                         >
                           ×
                         </button>
@@ -256,23 +327,41 @@ const Projects = () => {
                       
                       <div className="p-6">
                         <div className="flex items-center justify-between mb-4">
-                          <h3 className="text-2xl font-bold text-white">{project.title}</h3>
-                          <span className="text-sm text-cyan-400 bg-cyan-400/10 px-3 py-1 rounded">
+                          <h3 className={`text-2xl font-bold transition-all duration-300 ${
+                            theme === 'dark' ? 'text-white' : 'text-gray-900'
+                          }`}>
+                            {project.title}
+                          </h3>
+                          <span className={`text-sm px-3 py-1 rounded transition-all duration-300 ${
+                            theme === 'dark'
+                              ? 'text-cyan-400 bg-cyan-400/10'
+                              : 'text-orange-500 bg-orange-500/10'
+                          }`}>
                             {project.category}
                           </span>
                         </div>
                         
-                        <p className="text-gray-300 mb-6 leading-relaxed">
+                        <p className={`mb-6 leading-relaxed transition-all duration-300 ${
+                          theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                        }`}>
                           {project.longDescription}
                         </p>
                         
                         <div className="mb-6">
-                          <h4 className="text-lg font-semibold text-white mb-3">Technologies Used</h4>
+                          <h4 className={`text-lg font-semibold mb-3 transition-all duration-300 ${
+                            theme === 'dark' ? 'text-white' : 'text-gray-900'
+                          }`}>
+                            Technologies Used
+                          </h4>
                           <div className="flex flex-wrap gap-2">
                             {project.technologies.map((tech, index) => (
                               <span
                                 key={index}
-                                className="text-sm bg-purple-500/20 text-purple-300 px-3 py-1 rounded border border-purple-500/30"
+                                className={`text-sm px-3 py-1 rounded border transition-all duration-300 ${
+                                  theme === 'dark'
+                                    ? 'bg-purple-500/20 text-purple-300 border-purple-500/30'
+                                    : 'bg-pink-500/20 text-pink-600 border-pink-500/30'
+                                }`}
                               >
                                 {tech}
                               </span>
@@ -285,7 +374,11 @@ const Projects = () => {
                             href={project.github}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex items-center space-x-2 px-4 py-2 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors"
+                            className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                              theme === 'dark'
+                                ? 'bg-gray-800 hover:bg-gray-700 text-white'
+                                : 'bg-gray-100 hover:bg-gray-200 text-gray-900'
+                            }`}
                           >
                             <Github size={20} />
                             <span>Source Code</span>
@@ -294,7 +387,11 @@ const Projects = () => {
                             href={project.live}
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="flex items-center space-x-2 px-4 py-2 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg hover:from-cyan-600 hover:to-purple-600 transition-all duration-300"
+                            className={`flex items-center space-x-2 px-4 py-2 text-white rounded-lg transition-all duration-300 ${
+                              theme === 'dark'
+                                ? 'bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600'
+                                : 'bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600'
+                            }`}
                           >
                             <ExternalLink size={20} />
                             <span>Live Demo</span>

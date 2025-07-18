@@ -1,18 +1,12 @@
-import React from "react";
-import { motion } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Github,
-  Linkedin,
-  Twitter,
-  Send,
-  CheckCircle,
-} from "lucide-react";
+import React, { useState } from 'react';
+import { motion } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { useForm } from 'react-hook-form';
+import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, CheckCircle } from 'lucide-react';
+import { useTheme } from '../hooks/useTheme';
 
 const Contact = () => {
+  const { theme } = useTheme();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -116,7 +110,9 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 bg-gray-900">
+    <section id="contact" className={`py-20 transition-all duration-800 ${
+      theme === 'dark' ? 'bg-gray-900' : 'bg-blue-50'
+    }`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           ref={ref}
@@ -126,14 +122,19 @@ const Contact = () => {
           className="text-center mb-16"
         >
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            <span className="bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent">
+            <span className={`transition-all duration-300 ${
+              theme === 'dark'
+                ? 'bg-gradient-to-r from-cyan-400 to-purple-400 bg-clip-text text-transparent'
+                : 'bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent'
+            }`}>
               Get In Touch
             </span>
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            I'm always open to discussing new opportunities, collaborations, or
-            just having a conversation about technology and biology. Feel free
-            to reach out!
+          <p className={`text-xl max-w-3xl mx-auto transition-all duration-300 ${
+            theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+          }`}>
+            I'm always open to discussing new opportunities, collaborations, or just having a conversation 
+            about technology and biology. Feel free to reach out!
           </p>
         </motion.div>
 
@@ -146,7 +147,9 @@ const Contact = () => {
             className="space-y-8"
           >
             <div>
-              <h3 className="text-2xl font-bold mb-6 text-white">
+              <h3 className={`text-2xl font-bold mb-6 transition-all duration-300 ${
+                theme === 'dark' ? 'text-white' : 'text-gray-900'
+              }`}>
                 Contact Information
               </h3>
               <div className="space-y-4">
@@ -157,16 +160,26 @@ const Contact = () => {
                     initial={{ opacity: 0, x: -20 }}
                     animate={inView ? { opacity: 1, x: 0 } : {}}
                     transition={{ duration: 0.6, delay: 0.1 * index }}
-                    className="flex items-center space-x-4 p-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-all duration-300 group"
+                    className={`flex items-center space-x-4 p-4 rounded-lg transition-all duration-300 group ${
+                      theme === 'dark'
+                        ? 'bg-gray-800 hover:bg-gray-700'
+                        : 'bg-white hover:bg-gray-50 shadow-lg'
+                    }`}
                   >
-                    <div
-                      className={`w-12 h-12 rounded-lg bg-gradient-to-r ${info.color} flex items-center justify-center`}
-                    >
+                    <div className={`w-12 h-12 rounded-lg bg-gradient-to-r ${info.color} flex items-center justify-center`}>
                       <info.icon size={24} className="text-white" />
                     </div>
                     <div>
-                      <p className="text-sm text-gray-400">{info.label}</p>
-                      <p className="text-white font-medium group-hover:text-cyan-400 transition-colors">
+                      <p className={`text-sm transition-all duration-300 ${
+                        theme === 'dark' ? 'text-gray-400' : 'text-gray-600'
+                      }`}>
+                        {info.label}
+                      </p>
+                      <p className={`font-medium transition-colors ${
+                        theme === 'dark'
+                          ? 'text-white group-hover:text-cyan-400'
+                          : 'text-gray-900 group-hover:text-orange-500'
+                      }`}>
                         {info.value}
                       </p>
                     </div>
@@ -177,7 +190,9 @@ const Contact = () => {
 
             {/* Social Media */}
             <div>
-              <h3 className="text-2xl font-bold mb-6 text-white">
+              <h3 className={`text-2xl font-bold mb-6 transition-all duration-300 ${
+                theme === 'dark' ? 'text-white' : 'text-gray-900'
+              }`}>
                 Connect on Social Media
               </h3>
               <div className="flex space-x-4">
@@ -190,10 +205,12 @@ const Contact = () => {
                     transition={{ duration: 0.6, delay: 0.1 * index }}
                     whileHover={{ scale: 1.1, y: -5 }}
                     whileTap={{ scale: 0.9 }}
-                    className={`w-14 h-14 bg-gray-800 rounded-lg flex items-center justify-center text-gray-300 ${social.color} transition-all duration-300 hover:bg-gray-700`}
+                    className={`w-14 h-14 rounded-lg flex items-center justify-center transition-all duration-300 ${
+                      theme === 'dark'
+                        ? `bg-gray-800 text-gray-300 hover:bg-gray-700 ${social.color}`
+                        : `bg-white text-gray-600 hover:bg-gray-50 shadow-lg ${social.color.replace('text-', 'hover:text-')}`
+                    }`}
                     aria-label={social.label}
-                    target="_blank"
-                    rel="noopener noreferrer"
                   >
                     <social.icon size={24} />
                   </motion.a>
@@ -202,24 +219,42 @@ const Contact = () => {
             </div>
 
             {/* Quick Info */}
-            <div className="bg-gray-800 rounded-xl p-6 border border-gray-700">
-              <h4 className="text-xl font-bold text-white mb-4">Quick Facts</h4>
+            <div className={`rounded-xl p-6 border transition-all duration-300 ${
+              theme === 'dark'
+                ? 'bg-gray-800 border-gray-700'
+                : 'bg-white border-gray-200 shadow-lg'
+            }`}>
+              <h4 className={`text-xl font-bold mb-4 transition-all duration-300 ${
+                theme === 'dark' ? 'text-white' : 'text-gray-900'
+              }`}>
+                Quick Facts
+              </h4>
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-                  <span className="text-gray-300">
+                  <span className={`transition-all duration-300 ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
                     Available for internships
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-cyan-400 rounded-full"></div>
-                  <span className="text-gray-300">
+                  <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    theme === 'dark' ? 'bg-cyan-400' : 'bg-orange-400'
+                  }`}></div>
+                  <span className={`transition-all duration-300 ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
                     Open to research collaborations
                   </span>
                 </div>
                 <div className="flex items-center space-x-3">
-                  <div className="w-2 h-2 bg-purple-400 rounded-full"></div>
-                  <span className="text-gray-300">
+                  <div className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                    theme === 'dark' ? 'bg-purple-400' : 'bg-pink-400'
+                  }`}></div>
+                  <span className={`transition-all duration-300 ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
                     Interested in freelance projects
                   </span>
                 </div>
@@ -232,12 +267,18 @@ const Contact = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="bg-gray-800 rounded-xl p-8 border border-gray-700"
+           className={`rounded-xl p-8 border transition-all duration-300 ${
+             theme === 'dark'
+               ? 'bg-gray-800 border-gray-700'
+               : 'bg-white border-gray-200 shadow-lg'
+           }`}
           >
-            <h3 className="text-2xl font-bold mb-6 text-white">
-              Send me a message
-            </h3>
-
+           <h3 className={`text-2xl font-bold mb-6 transition-all duration-300 ${
+             theme === 'dark' ? 'text-white' : 'text-gray-900'
+           }`}>
+             Send me a message
+           </h3>
+            
             {isSubmitted ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -245,126 +286,149 @@ const Contact = () => {
                 className="text-center py-8"
               >
                 <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
-                <h4 className="text-xl font-semibold text-white mb-2">
-                  Message Sent!
-                </h4>
-                <p className="text-gray-300">
-                  Thank you for reaching out. I'll get back to you soon.
-                </p>
+               <h4 className={`text-xl font-semibold mb-2 transition-all duration-300 ${
+                 theme === 'dark' ? 'text-white' : 'text-gray-900'
+               }`}>
+                 Message Sent!
+               </h4>
+               <p className={`transition-all duration-300 ${
+                 theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+               }`}>
+                 Thank you for reaching out. I'll get back to you soon.
+               </p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {error && (
-                  <div className="p-3 bg-red-900/50 text-red-200 rounded-lg">
-                    {error}
-                  </div>
-                )}
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label
-                      htmlFor="firstName"
-                      className="block text-sm font-medium text-gray-300 mb-2"
-                    >
+                    <label htmlFor="firstName" className={`block text-sm font-medium mb-2 transition-all duration-300 ${
+                      theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
                       First Name
                     </label>
                     <input
-                      id="firstName"
+                      {...register('firstName', { required: 'First name is required' })}
                       type="text"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
+                      id="firstName"
+                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+                        theme === 'dark'
+                          ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
+                          : 'bg-white border-gray-300 text-gray-900 focus:border-orange-400 focus:ring-orange-400/20'
+                      }`}
                       placeholder="John"
-                      required
                     />
+                    {errors.firstName && (
+                      <p className="text-red-400 text-sm mt-1">{errors.firstName.message as string}</p>
+                    )}
                   </div>
-
+                  
                   <div>
-                    <label
-                      htmlFor="lastName"
-                      className="block text-sm font-medium text-gray-300 mb-2"
-                    >
+                    <label htmlFor="lastName" className={`block text-sm font-medium mb-2 transition-all duration-300 ${
+                      theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                    }`}>
                       Last Name
                     </label>
                     <input
-                      id="lastName"
+                      {...register('lastName', { required: 'Last name is required' })}
                       type="text"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleChange}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
+                      id="lastName"
+                      className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+                        theme === 'dark'
+                          ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
+                          : 'bg-white border-gray-300 text-gray-900 focus:border-orange-400 focus:ring-orange-400/20'
+                      }`}
                       placeholder="Doe"
-                      required
                     />
+                    {errors.lastName && (
+                      <p className="text-red-400 text-sm mt-1">{errors.lastName.message as string}</p>
+                    )}
                   </div>
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="email"
-                    className="block text-sm font-medium text-gray-300 mb-2"
-                  >
+                  <label htmlFor="email" className={`block text-sm font-medium mb-2 transition-all duration-300 ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
                     Email Address
                   </label>
                   <input
-                    id="email"
+                    {...register('email', { 
+                      required: 'Email is required',
+                      pattern: {
+                        value: /^\S+@\S+$/i,
+                        message: 'Please enter a valid email'
+                      }
+                    })}
                     type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
+                    id="email"
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+                      theme === 'dark'
+                        ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
+                        : 'bg-white border-gray-300 text-gray-900 focus:border-orange-400 focus:ring-orange-400/20'
+                    }`}
                     placeholder="john@example.com"
-                    required
                   />
+                  {errors.email && (
+                    <p className="text-red-400 text-sm mt-1">{errors.email.message as string}</p>
+                  )}
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="subject"
-                    className="block text-sm font-medium text-gray-300 mb-2"
-                  >
+                  <label htmlFor="subject" className={`block text-sm font-medium mb-2 transition-all duration-300 ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
                     Subject
                   </label>
                   <input
-                    id="subject"
+                    {...register('subject', { required: 'Subject is required' })}
                     type="text"
-                    name="subject"
-                    value={formData.subject}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors"
+                    id="subject"
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
+                      theme === 'dark'
+                        ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
+                        : 'bg-white border-gray-300 text-gray-900 focus:border-orange-400 focus:ring-orange-400/20'
+                    }`}
                     placeholder="Project collaboration"
-                    required
                   />
+                  {errors.subject && (
+                    <p className="text-red-400 text-sm mt-1">{errors.subject.message as string}</p>
+                  )}
                 </div>
 
                 <div>
-                  <label
-                    htmlFor="message"
-                    className="block text-sm font-medium text-gray-300 mb-2"
-                  >
+                  <label htmlFor="message" className={`block text-sm font-medium mb-2 transition-all duration-300 ${
+                    theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                  }`}>
                     Message
                   </label>
                   <textarea
+                    {...register('message', { required: 'Message is required' })}
                     id="message"
-                    name="message"
                     rows={5}
-                    value={formData.message}
-                    onChange={handleChange}
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 transition-colors resize-none"
+                    className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors resize-none ${
+                      theme === 'dark'
+                        ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
+                        : 'bg-white border-gray-300 text-gray-900 focus:border-orange-400 focus:ring-orange-400/20'
+                    }`}
                     placeholder="Tell me about your project or inquiry..."
-                    required
                   />
+                  {errors.message && (
+                    <p className="text-red-400 text-sm mt-1">{errors.message.message as string}</p>
+                  )}
                 </div>
 
                 <motion.button
                   type="submit"
-                  disabled={isSubmitting}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
-                  className="w-full px-6 py-3 bg-gradient-to-r from-cyan-500 to-purple-500 text-white rounded-lg font-medium hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 flex items-center justify-center space-x-2 disabled:opacity-50"
+                  className={`w-full px-6 py-3 text-white rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 ${
+                    theme === 'dark'
+                      ? 'bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600'
+                      : 'bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600'
+                  }`}
                 >
                   <Send size={20} />
-                  <span>{isSubmitting ? 'Sending...' : 'Send Message'}</span>
+                  <span>Send Message</span>
                 </motion.button>
               </form>
             )}
