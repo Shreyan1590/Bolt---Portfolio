@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { Building } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import InteractiveCard from './InteractiveCard';
 import { ChevronDown, Download, Github, Linkedin, Mail } from 'lucide-react';

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import { Building } from 'lucide-react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, CheckCircle } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';

@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Building } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { Microscope, Brain, Dna, ChartBar, BookOpen, Users } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';

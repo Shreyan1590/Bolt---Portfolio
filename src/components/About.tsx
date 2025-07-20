@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Building } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { GraduationCap, Calendar, MapPin, Award, Code, Microscope, Brain, Target, Users, BookOpen, School } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';

@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import InteractiveCard from './InteractiveCard';
+import { Building } from 'lucide-react';
 import ResponsiveImage from './ResponsiveImage';
 import { Github, ExternalLink, Code, Database, Microscope, Brain, Filter } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
