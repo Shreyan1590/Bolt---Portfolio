@@ -60,17 +60,17 @@ const Research = () => {
 
   const publications = [
     {
-      title: 'Machine Learning Approaches for Protein Structure Prediction',
-      authors: 'Shreyan Kumar, Dr. Research Supervisor',
-      journal: 'Student Research Journal',
-      year: '2024',
-      status: 'Under Review'
+      title: 'Energy Consumption Prediction using Machine Learning',
+      authors: 'Shreyan S',
+      journal: 'Undergraduate Research Conference',
+      year: '2025',
+      status: 'Presented'
     },
     {
-      title: 'Comparative Analysis of Genomic Variant Calling Algorithms',
-      authors: 'Shreyan Kumar, Research Team',
+      title: 'Enhancing Human-Computer Interaction - Gesture-Based Virtual Mouse',
+      authors: 'Shreyan S',
       journal: 'Undergraduate Research Conference',
-      year: '2024',
+      year: '2025',
       status: 'Presented'
     },
   ];

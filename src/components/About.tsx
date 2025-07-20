@@ -15,28 +15,28 @@ const About = () => {
     {
       year: '2023 - Present',
       title: 'B.Tech Computer Science and Biosciences',
-      organization: 'SIMATS Engineering College',
+      organization: 'SIMATS Engineering',
       description: 'Currently pursuing an interdisciplinary program that combines computer science fundamentals with bioscience applications, focusing on computational biology and bioinformatics.',
       icon: GraduationCap,
       color: 'from-cyan-400 to-blue-500'
     },
     {
-      year: '2022 - 2023',
+      year: '2022 - 2024',
       title: 'Higher Secondary Education',
-      organization: 'Senior Secondary School',
-      description: 'Completed with distinction in Science stream, specializing in Mathematics, Physics, Chemistry, and Biology, laying a strong foundation for engineering studies.',
+      organization: 'Higher Secondary School',
+      description: 'Completed with distinction in Science stream, specializing in Physics, Chemistry, Biology and Computer Science, laying a strong foundation for engineering studies.',
       icon: Award,
       color: 'from-purple-400 to-pink-500'
     },
   ];
 
   const achievements = [
-    'Dean\'s List for Academic Excellence (2023-2024)',
-    'Active member of Computer Science Society',
+    'Best Project Award in College Tech Fest',
+    'Active member of Passion Pitch Club - A Startup Incubator',
     'Participated in National Science Olympiad',
     'Volunteer at local biotech awareness programs',
-    'Published research paper on bioinformatics applications',
-    'Winner of inter-college coding competition',
+    'Published research paper on Energy applications',
+    'Winner of inter-college Hackathon coding competition',
   ];
 
   const interests = [
@@ -221,7 +221,7 @@ const About = () => {
                   <span className={`transition-all duration-300 ${
                     theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
                   }`}>
-                    Chennai, Tamil Nadu, India
+                    Kanchipuram, Tamil Nadu, India
                   </span>
                 </motion.div>
                 <motion.div 
@@ -235,7 +235,7 @@ const About = () => {
                   <span className={`transition-all duration-300 ${
                     theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
                   }`}>
-                    SIMATS Engineering College, Chennai
+                    SIMATS Engineering, Chennai
                   </span>
                 </motion.div>
                 <motion.div 
@@ -249,7 +249,7 @@ const About = () => {
                   <span className={`transition-all duration-300 ${
                     theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
                   }`}>
-                    2nd Year Student (2023-2027)
+                    2nd Year Student (2024-2028)
                   </span>
                 </motion.div>
               </div>

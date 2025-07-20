@@ -10,6 +10,7 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Research from './components/Research';
 import Contact from './components/Contact';
+import Footer from './components/Footer';
 import SmoothScroll from './components/SmoothScroll';
 import { LoadingProvider } from './components/LoadingManager';
 import { useTheme } from './hooks/useTheme';
@@ -72,6 +73,7 @@ function AppContent() {
           <Projects />
           <Research />
           <Contact />
+          <Footer />
         </main>
       </div>
     </SmoothScroll>

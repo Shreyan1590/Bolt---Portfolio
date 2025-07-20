@@ -4,7 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import InteractiveCard from './InteractiveCard';
 import ResponsiveImage from './ResponsiveImage';
-import { Github, ExternalLink, Code, Database, Microscope, Brain, Filter } from 'lucide-react';
+import { Github, ExternalLink, Code, Landmark, BusFront, Filter } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 
 const Projects = () => {
@@ -18,30 +18,30 @@ const Projects = () => {
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
 
-  const categories = ['All', 'Web Development', 'Bioinformatics', 'Data Science', 'Mobile'];
+  const categories = ['All', 'Web Development', 'FinTech', 'Mapping'];
 
   const projects = [
     {
       id: 1,
-      title: 'Genomic Sequence Analyzer',
-      category: 'Bioinformatics',
-      description: 'A comprehensive tool for analyzing DNA sequences with pattern recognition and mutation detection capabilities.',
-      longDescription: 'This bioinformatics application provides researchers with advanced tools for genomic analysis. Features include sequence alignment, mutation detection, phylogenetic analysis, and visualization of genetic patterns. Built with Python and BioPython, it processes large genomic datasets efficiently.',
+      title: 'Banking Application',
+      category: 'FinTech',
+      description: 'Shreyan Bank is a modern, user-friendly mobile banking app that offers seamless financial management, instant transactions, and advanced security features. Enjoy hassle-free banking with 24/7 access to accounts, quick fund transfers, bill payments, and smart budgeting tools—all in one secure platform.',
+      longDescription: 'Shreyan Bank – Your smart, secure, and simple mobile banking solution. Transfer funds instantly, pay bills, track expenses, and grow savings—all in one app. With biometric security, 24/7 access, and smart financial insights, banking has never been easier. Download now for seamless, stress-free money management!',
       image: 'https://images.pexels.com/photos/3825580/pexels-photo-3825580.jpeg?auto=compress&cs=tinysrgb&w=500',
-      technologies: ['Python', 'BioPython', 'NumPy', 'Matplotlib', 'Pandas'],
+      technologies: ['React', 'TypeScript', 'Vite', 'Node.js', 'Firebase'],
       github: '#',
       live: '#',
-      icon: Microscope,
+      icon: Landmark,
       color: 'from-green-400 to-teal-500'
     },
     {
       id: 2,
-      title: 'React Task Management App',
+      title: 'Online Quiz System with Proctoring',
       category: 'Web Development',
-      description: 'A modern task management application with real-time collaboration features and intuitive UI.',
-      longDescription: 'Full-stack web application for team collaboration and task management. Features include real-time updates, user authentication, project organization, and analytics dashboard. Built with React, Node.js, and MongoDB.',
+      description: 'Quizzynet is an advanced online quiz platform with AI-powered proctoring to prevent cheating. Conduct secure exams with live monitoring, screen recording, and behavior analysis. Ideal for schools, universities, and corporate training.',
+      longDescription: 'Ensure exam integrity with Quizzynet, a cutting-edge online quiz system featuring AI-powered proctoring to detect and prevent cheating in real time. Designed for educators, institutions, and businesses, our platform combines a seamless quiz-taking experience with robust security measures.',
       image: 'https://images.pexels.com/photos/7688336/pexels-photo-7688336.jpeg?auto=compress&cs=tinysrgb&w=500',
-      technologies: ['React', 'Node.js', 'MongoDB', 'Socket.io', 'Tailwind CSS'],
+      technologies: ['React', 'Node.js', 'TypeScript', 'Socket.io', 'Tailwind CSS'],
       github: '#',
       live: '#',
       icon: Code,
@@ -49,55 +49,16 @@ const Projects = () => {
     },
     {
       id: 3,
-      title: 'Disease Prediction ML Model',
-      category: 'Data Science',
+      title: 'Simulation Software - Real Time Operating System Kernel for Adaptive and Intelligent Public Transport Scheduling',
+      category: 'Mapping',
       description: 'Machine learning model for early disease prediction using patient data and symptoms analysis.',
       longDescription: 'Advanced machine learning system that analyzes patient symptoms and medical history to predict potential diseases. Uses ensemble methods and feature engineering to achieve high accuracy. Includes a web interface for healthcare professionals.',
       image: 'https://images.pexels.com/photos/40568/medical-appointment-doctor-healthcare-40568.jpeg?auto=compress&cs=tinysrgb&w=500',
       technologies: ['Python', 'Scikit-learn', 'Flask', 'PostgreSQL', 'TensorFlow'],
       github: '#',
       live: '#',
-      icon: Brain,
+      icon: BusFront,
       color: 'from-red-400 to-pink-500'
-    },
-    {
-      id: 4,
-      title: 'Protein Structure Visualizer',
-      category: 'Bioinformatics',
-      description: '3D protein structure visualization tool with interactive molecular analysis features.',
-      longDescription: 'Interactive web application for visualizing and analyzing protein structures. Features include 3D rendering, molecular docking simulation, and structural comparison tools. Designed for researchers and students in structural biology.',
-      image: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=500',
-      technologies: ['Three.js', 'React', 'WebGL', 'PDB Parser', 'D3.js'],
-      github: '#',
-      live: '#',
-      icon: Microscope,
-      color: 'from-cyan-400 to-blue-500'
-    },
-    {
-      id: 5,
-      title: 'Student Portal System',
-      category: 'Web Development',
-      description: 'Complete student management system with course enrollment, grades, and communication features.',
-      longDescription: 'Comprehensive web platform for educational institutions. Includes student registration, course management, grade tracking, assignment submission, and communication tools. Built with modern web technologies and responsive design.',
-      image: 'https://images.pexels.com/photos/1181533/pexels-photo-1181533.jpeg?auto=compress&cs=tinysrgb&w=500',
-      technologies: ['React', 'Express.js', 'MySQL', 'JWT', 'Bootstrap'],
-      github: '#',
-      live: '#',
-      icon: Database,
-      color: 'from-purple-400 to-indigo-500'
-    },
-    {
-      id: 6,
-      title: 'Biometric Analysis Dashboard',
-      category: 'Data Science',
-      description: 'Real-time biometric data analysis with machine learning insights and health monitoring.',
-      longDescription: 'Advanced dashboard for analyzing biometric data from wearable devices. Provides real-time monitoring, trend analysis, and health insights using machine learning algorithms. Includes predictive analytics for health risk assessment.',
-      image: 'https://images.pexels.com/photos/590022/pexels-photo-590022.jpeg?auto=compress&cs=tinysrgb&w=500',
-      technologies: ['Python', 'Streamlit', 'Pandas', 'Plotly', 'Redis'],
-      github: '#',
-      live: '#',
-      icon: Brain,
-      color: 'from-orange-400 to-red-500'
     },
   ];
 
