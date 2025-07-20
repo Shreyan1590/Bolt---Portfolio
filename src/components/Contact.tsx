@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useForm } from 'react-hook-form';
+import { useForm as useFormspree, ValidationError } from '@formspree/react';
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, CheckCircle } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 
@@ -20,8 +21,24 @@ const Contact = () => {
     threshold: 0.1,
   });
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
+  // Formspree hook
+  const [formspreeState, formspreeHandleSubmit] = useFormspree("xovlqpaa");
+  
+  // React Hook Form
+  const { 
+    register, 
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm<FormData>();
+
+  // Combined submit handler
+  const onSubmit = async (data: FormData) => {
+    const response = await formspreeHandleSubmit(data);
+    if (response && response.ok) {
+      reset();
+    }
+  };
 
   const contactInfo = [
     {
@@ -67,13 +84,6 @@ const Contact = () => {
       color: 'hover:text-cyan-400'
     },
   ];
-
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsSubmitted(true);
-    reset();
-  };
 
   return (
     <section id="contact" className={`py-20 transition-all duration-800 ${
@@ -166,6 +176,8 @@ const Contact = () => {
                   <motion.a
                     key={social.label}
                     href={social.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={inView ? { opacity: 1, scale: 1 } : {}}
                     transition={{ duration: 0.6, delay: 0.1 * index }}
@@ -174,7 +186,7 @@ const Contact = () => {
                     className={`w-14 h-14 rounded-lg flex items-center justify-center transition-all duration-300 ${
                       theme === 'dark'
                         ? `bg-gray-800 text-gray-300 hover:bg-gray-700 ${social.color}`
-                        : `bg-white text-gray-600 hover:bg-gray-50 shadow-lg ${social.color.replace('text-', 'hover:text-')}`
+                        : `bg-white text-gray-600 hover:bg-gray-50 shadow-lg ${social.color.replace('hover:text-', 'hover:text-')}`
                     }`}
                     aria-label={social.label}
                   >
@@ -245,7 +257,7 @@ const Contact = () => {
               Send me a message
             </h3>
             
-            {state.succeeded ? (
+            {formspreeState.succeeded ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -264,7 +276,7 @@ const Contact = () => {
                 </p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="firstName" className={`block text-sm font-medium mb-2 transition-all duration-300 ${
@@ -282,7 +294,7 @@ const Contact = () => {
                           ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
                           : 'bg-white border-gray-300 text-gray-900 focus:border-orange-400 focus:ring-orange-400/20'
                       }`}
-                      placeholder="John"
+                      placeholder="First Name"
                     />
                     {errors.firstName && (
                       <p className="text-red-400 text-sm mt-1">{errors.firstName.message as string}</p>
@@ -305,7 +317,7 @@ const Contact = () => {
                           ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
                           : 'bg-white border-gray-300 text-gray-900 focus:border-orange-400 focus:ring-orange-400/20'
                       }`}
-                      placeholder="Doe"
+                      placeholder="Last Name"
                     />
                     {errors.lastName && (
                       <p className="text-red-400 text-sm mt-1">{errors.lastName.message as string}</p>
@@ -335,12 +347,12 @@ const Contact = () => {
                         ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
                         : 'bg-white border-gray-300 text-gray-900 focus:border-orange-400 focus:ring-orange-400/20'
                     }`}
-                    placeholder="john@example.com"
+                    placeholder="mail@example.com"
                   />
                   <ValidationError 
                     prefix="Email" 
                     field="email"
-                    errors={state.errors}
+                    errors={formspreeState.errors}
                     className="text-red-400 text-sm mt-1"
                   />
                   {errors.email && (
@@ -364,7 +376,7 @@ const Contact = () => {
                         ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
                         : 'bg-white border-gray-300 text-gray-900 focus:border-orange-400 focus:ring-orange-400/20'
                     }`}
-                    placeholder="Project collaboration"
+                    placeholder="Enter the subject of your message"
                   />
                   {errors.subject && (
                     <p className="text-red-400 text-sm mt-1">{errors.subject.message as string}</p>
@@ -387,12 +399,12 @@ const Contact = () => {
                         ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
                         : 'bg-white border-gray-300 text-gray-900 focus:border-orange-400 focus:ring-orange-400/20'
                     }`}
-                    placeholder="Tell me about your project or inquiry..."
+                    placeholder="Type your message here..."
                   />
                   <ValidationError 
                     prefix="Message" 
                     field="message"
-                    errors={state.errors}
+                    errors={formspreeState.errors}
                     className="text-red-400 text-sm mt-1"
                   />
                   {errors.message && (
@@ -402,17 +414,17 @@ const Contact = () => {
 
                 <motion.button
                   type="submit"
-                  disabled={state.submitting}
+                  disabled={formspreeState.submitting}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={`w-full px-6 py-3 text-white rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 ${
                     theme === 'dark'
                       ? 'bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600'
                       : 'bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600'
-                  } ${state.submitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  } ${formspreeState.submitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                 >
                   <Send size={20} />
-                  <span>{state.submitting ? 'Sending...' : 'Send Message'}</span>
+                  <span>{formspreeState.submitting ? 'Sending...' : 'Send Message'}</span>
                 </motion.button>
               </form>
             )}
