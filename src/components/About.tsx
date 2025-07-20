@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { GraduationCap, Calendar, MapPin, Award, Code, Microscope, Brain, Target, Users, BookOpen, School, Building2 } from 'lucide-react';
+import { GraduationCap, Calendar, MapPin, Award, Code, Microscope, Brain, Target, Users, BookOpen, School } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 
 const About = () => {
@@ -23,9 +23,9 @@ const About = () => {
     {
       year: '2022 - 2024',
       title: 'Higher Secondary Education',
-      organization: 'Higher Secondary School',
+      organization: 'Sree Narayana Guru Matric Higher Secondary School',
       description: 'Completed with distinction in Science stream, specializing in Physics, Chemistry, Biology and Computer Science, laying a strong foundation for engineering studies.',
-      icon: Award,
+      icon: School,
       color: 'from-purple-400 to-pink-500'
     },
   ];
