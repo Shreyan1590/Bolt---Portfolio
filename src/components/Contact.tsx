@@ -349,15 +349,6 @@ const Contact = () => {
                     }`}
                     placeholder="mail@example.com"
                   />
-                  <ValidationError 
-                    prefix="Email" 
-                    field="email"
-                    errors={formspreeState.errors}
-                    className="text-red-400 text-sm mt-1"
-                  />
-                  {errors.email && (
-                    <p className="text-red-400 text-sm mt-1">{errors.email.message as string}</p>
-                  )}
                 </div>
 
                 <div>
