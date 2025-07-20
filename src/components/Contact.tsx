@@ -392,15 +392,6 @@ const Contact = () => {
                     }`}
                     placeholder="Type your message here..."
                   />
-                  <ValidationError 
-                    prefix="Message" 
-                    field="message"
-                    errors={formspreeState.errors}
-                    className="text-red-400 text-sm mt-1"
-                  />
-                  {errors.message && (
-                    <p className="text-red-400 text-sm mt-1">{errors.message.message as string}</p>
-                  )}
                 </div>
 
                 <motion.button
