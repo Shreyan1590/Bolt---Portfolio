@@ -2,7 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useForm } from 'react-hook-form';
-import { useForm as useFormspree, ValidationError } from '@formspree/react';
+import { useForm as useFormspree } from '@formspree/react';
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, CheckCircle } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 
