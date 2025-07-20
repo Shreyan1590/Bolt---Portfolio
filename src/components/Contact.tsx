@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, CheckCircle } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
+import { ValidationError } from '@formspree/react';
 
 interface FormData {
   firstName: string;
@@ -233,38 +234,38 @@ const Contact = () => {
             initial={{ opacity: 0, x: 50 }}
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
-           className={`rounded-xl p-8 border transition-all duration-300 ${
-             theme === 'dark'
-               ? 'bg-gray-800 border-gray-700'
-               : 'bg-white border-gray-200 shadow-lg'
-           }`}
+            className={`rounded-xl p-8 border transition-all duration-300 ${
+              theme === 'dark'
+                ? 'bg-gray-800 border-gray-700'
+                : 'bg-white border-gray-200 shadow-lg'
+            }`}
           >
-           <h3 className={`text-2xl font-bold mb-6 transition-all duration-300 ${
-             theme === 'dark' ? 'text-white' : 'text-gray-900'
-           }`}>
-             Send me a message
-           </h3>
+            <h3 className={`text-2xl font-bold mb-6 transition-all duration-300 ${
+              theme === 'dark' ? 'text-white' : 'text-gray-900'
+            }`}>
+              Send me a message
+            </h3>
             
-            {isSubmitted ? (
+            {state.succeeded ? (
               <motion.div
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 className="text-center py-8"
               >
                 <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
-               <h4 className={`text-xl font-semibold mb-2 transition-all duration-300 ${
-                 theme === 'dark' ? 'text-white' : 'text-gray-900'
-               }`}>
-                 Message Sent!
-               </h4>
-               <p className={`transition-all duration-300 ${
-                 theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
-               }`}>
-                 Thank you for reaching out. I'll get back to you soon.
-               </p>
+                <h4 className={`text-xl font-semibold mb-2 transition-all duration-300 ${
+                  theme === 'dark' ? 'text-white' : 'text-gray-900'
+                }`}>
+                  Message Sent!
+                </h4>
+                <p className={`transition-all duration-300 ${
+                  theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
+                }`}>
+                  Thank you for reaching out. I'll get back to you soon.
+                </p>
               </motion.div>
             ) : (
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
                     <label htmlFor="firstName" className={`block text-sm font-medium mb-2 transition-all duration-300 ${
@@ -276,6 +277,7 @@ const Contact = () => {
                       {...register('firstName', { required: 'First name is required' })}
                       type="text"
                       id="firstName"
+                      name="firstName"
                       className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
                         theme === 'dark'
                           ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
@@ -298,6 +300,7 @@ const Contact = () => {
                       {...register('lastName', { required: 'Last name is required' })}
                       type="text"
                       id="lastName"
+                      name="lastName"
                       className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
                         theme === 'dark'
                           ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
@@ -327,12 +330,19 @@ const Contact = () => {
                     })}
                     type="email"
                     id="email"
+                    name="email"
                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
                       theme === 'dark'
                         ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
                         : 'bg-white border-gray-300 text-gray-900 focus:border-orange-400 focus:ring-orange-400/20'
                     }`}
                     placeholder="john@example.com"
+                  />
+                  <ValidationError 
+                    prefix="Email" 
+                    field="email"
+                    errors={state.errors}
+                    className="text-red-400 text-sm mt-1"
                   />
                   {errors.email && (
                     <p className="text-red-400 text-sm mt-1">{errors.email.message as string}</p>
@@ -349,6 +359,7 @@ const Contact = () => {
                     {...register('subject', { required: 'Subject is required' })}
                     type="text"
                     id="subject"
+                    name="subject"
                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors ${
                       theme === 'dark'
                         ? 'bg-gray-700 border-gray-600 text-white focus:border-cyan-400 focus:ring-cyan-400/20'
@@ -370,6 +381,7 @@ const Contact = () => {
                   <textarea
                     {...register('message', { required: 'Message is required' })}
                     id="message"
+                    name="message"
                     rows={5}
                     className={`w-full px-4 py-3 border rounded-lg focus:outline-none focus:ring-2 transition-colors resize-none ${
                       theme === 'dark'
@@ -378,6 +390,12 @@ const Contact = () => {
                     }`}
                     placeholder="Tell me about your project or inquiry..."
                   />
+                  <ValidationError 
+                    prefix="Message" 
+                    field="message"
+                    errors={state.errors}
+                    className="text-red-400 text-sm mt-1"
+                  />
                   {errors.message && (
                     <p className="text-red-400 text-sm mt-1">{errors.message.message as string}</p>
                   )}
@@ -385,16 +403,17 @@ const Contact = () => {
 
                 <motion.button
                   type="submit"
+                  disabled={state.submitting}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={`w-full px-6 py-3 text-white rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 ${
                     theme === 'dark'
                       ? 'bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600'
                       : 'bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600'
-                  }`}
+                  } ${state.submitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                 >
                   <Send size={20} />
-                  <span>Send Message</span>
+                  <span>{state.submitting ? 'Sending...' : 'Send Message'}</span>
                 </motion.button>
               </form>
             )}
