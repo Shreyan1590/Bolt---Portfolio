@@ -4,7 +4,6 @@ import { useInView } from 'react-intersection-observer';
 import { useForm } from 'react-hook-form';
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, CheckCircle } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
-import { ValidationError } from '@formspree/react';
 
 interface FormData {
   firstName: string;
