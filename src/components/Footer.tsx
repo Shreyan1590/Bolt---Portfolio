@@ -67,7 +67,7 @@ export default function Footer() {
 
         {/* Build Info */}
         <div className="mt-8 text-center text-xs text-gray-500 dark:text-gray-600">
-          <p>Developed by Shreyan with<Heart className="h-4 w-4 mx-1 text-red-500 fill-current animate-heartbeat" /></p>
+          <p>Developed by Shreyan with <Heart className="h-4 w-4 inline-block mx-1 text-red-500 fill-current animate-heartbeat" /></p>
         </div>
       </div>
     </footer>
