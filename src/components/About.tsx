@@ -1,8 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Building } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
-import { GraduationCap, Calendar, MapPin, Award, Code, Microscope, Brain, Target, Users, BookOpen, School } from 'lucide-react';
+import { GraduationCap, Calendar, MapPin, Award, Code, Microscope, Brain, Target, Users, BookOpen, School, Building2 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 
 const About = () => {
@@ -14,28 +13,30 @@ const About = () => {
 
   const timelineData = [
     {
-      year: '2024 - Present',
+      year: '2023 - Present',
       title: 'B.Tech Computer Science and Biosciences',
-      organization: 'SIMATS Engineering',
-      description: 'Currently pursuing interdisciplinary program combining computer science fundamentals with bioscience applications.',
+      organization: 'SIMATS Engineering College',
+      description: 'Currently pursuing an interdisciplinary program that combines computer science fundamentals with bioscience applications, focusing on computational biology and bioinformatics.',
       icon: GraduationCap,
       color: 'from-cyan-400 to-blue-500'
     },
     {
-      year: '2022 - 2024',
+      year: '2022 - 2023',
       title: 'Higher Secondary Education',
-      organization: 'Sree Narayana Guru Matric Higher Secondary School',
-      description: 'Completed with focus on Science stream, laying foundation for Computer Science studies.',
+      organization: 'Senior Secondary School',
+      description: 'Completed with distinction in Science stream, specializing in Mathematics, Physics, Chemistry, and Biology, laying a strong foundation for engineering studies.',
       icon: Award,
       color: 'from-purple-400 to-pink-500'
     },
   ];
 
   const achievements = [
-    'Best Project Award - Online Quiz System with Proctoring',
-    'Active member of Passion Pitch College Club - A Startup Club',
-    'Winner in Inter-College Hackathon - Developed a Expense Tracker & Splitter App',
-    'Opern Source Contributor - Contributed to various projects on GitHub',
+    'Dean\'s List for Academic Excellence (2023-2024)',
+    'Active member of Computer Science Society',
+    'Participated in National Science Olympiad',
+    'Volunteer at local biotech awareness programs',
+    'Published research paper on bioinformatics applications',
+    'Winner of inter-college coding competition',
   ];
 
   const interests = [
@@ -63,7 +64,7 @@ const About = () => {
     },
   ];
 
-return (
+  return (
     <section 
       id="about" 
       className={`py-20 transition-all duration-800 ${
@@ -234,7 +235,7 @@ return (
                   <span className={`transition-all duration-300 ${
                     theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
                   }`}>
-                    SIMATS Engineering
+                    SIMATS Engineering College, Chennai
                   </span>
                 </motion.div>
                 <motion.div 
@@ -248,7 +249,7 @@ return (
                   <span className={`transition-all duration-300 ${
                     theme === 'dark' ? 'text-gray-300' : 'text-gray-700'
                   }`}>
-                    2nd Year Student (2024-2028)
+                    2nd Year Student (2023-2027)
                   </span>
                 </motion.div>
               </div>

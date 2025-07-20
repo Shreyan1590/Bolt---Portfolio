@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Building } from 'lucide-react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, CheckCircle } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
@@ -21,16 +20,8 @@ const Contact = () => {
     threshold: 0.1,
   });
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset
-  } = useForm<FormData>();
-
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [error, setError] = useState('');
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormData>();
 
   const contactInfo = [
     {
@@ -66,7 +57,7 @@ const Contact = () => {
     {
       icon: Linkedin,
       label: 'LinkedIn',
-      href: 'https://www.linkedin.com/in/shreyan-s2596/',
+      href: 'https://linkedin.com/in/shreyan_2596',
       color: 'hover:text-blue-400'
     },
     {
@@ -78,29 +69,10 @@ const Contact = () => {
   ];
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    setIsSubmitting(true);
-    setError('');
-
-    try {
-      const response = await fetch('https://formspree.io/f/xovlqpaa', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (response.ok) {
-        setIsSubmitted(true);
-        reset();
-      } else {
-        throw new Error('Form submission failed');
-      }
-    } catch (err) {
-      setError('Failed to send message. Please try again later.');
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Simulate form submission
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    setIsSubmitted(true);
+    reset();
   };
 
   return (
@@ -411,29 +383,18 @@ const Contact = () => {
                   )}
                 </div>
 
-                {error && (
-                  <p className="text-red-400 text-sm">{error}</p>
-                )}
-
                 <motion.button
                   type="submit"
-                  disabled={isSubmitting}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={`w-full px-6 py-3 text-white rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 ${
                     theme === 'dark'
                       ? 'bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600'
                       : 'bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600'
-                  } ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
+                  }`}
                 >
-                  {isSubmitting ? (
-                    <span>Sending...</span>
-                  ) : (
-                    <>
-                      <Send size={20} />
-                      <span>Send Message</span>
-                    </>
-                  )}
+                  <Send size={20} />
+                  <span>Send Message</span>
                 </motion.button>
               </form>
             )}

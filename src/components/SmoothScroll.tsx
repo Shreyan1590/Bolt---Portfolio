@@ -1,43 +1,39 @@
-import React, { useEffect, useRef } from "react";
-import Lenis from "lenis";
+import { useEffect, useRef } from 'react';
+import Lenis from 'lenis';
 
 interface SmoothScrollProps {
   children: React.ReactNode;
 }
 
 const SmoothScroll: React.FC<SmoothScrollProps> = ({ children }) => {
-  const lenisRef = useRef<Lenis>();
+  const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
-    const lenis = new Lenis({
+    // Initialize Lenis smooth scroll
+    lenisRef.current = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
       smooth: true,
-      smoothTouch: true,
-      touchMultiplier: 1.5,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+      infinite: false,
     });
 
-    const raf = (time: number) => {
-      lenis.raf(time);
+    // Animation frame loop for Lenis
+    function raf(time: number) {
+      lenisRef.current?.raf(time);
       requestAnimationFrame(raf);
-    };
+    }
+
     requestAnimationFrame(raf);
 
-    return () => lenis.destroy();
-  }, []);
-
-  // Expose scroll methods globally
-  useEffect(() => {
-    if (lenisRef.current) {
-      (window as any).scrollTo = (target: string | number) => {
-        if (typeof target === "string") {
-          const element = document.querySelector(target);
-          if (element) {
-            lenisRef.current?.scrollTo(element, { offset: -80 });
-          }
-        } else {
-          lenisRef.current?.scrollTo(target);
-        }
-      };
-    }
+    // Cleanup on unmount
+    return () => {
+      lenisRef.current?.destroy();
+    };
   }, []);
 
   return <>{children}</>;

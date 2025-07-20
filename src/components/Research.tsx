@@ -1,6 +1,5 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Building } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
 import { Microscope, Brain, Dna, ChartBar, BookOpen, Users } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
@@ -194,7 +193,7 @@ const Research = () => {
                     : 'bg-white border-gray-200 shadow-lg'
                 }`}
               >
-              <div className="flex items-start space-x-3 mb-3">
+                <div className="flex items-start space-x-3 mb-3">
                   <BookOpen className={`mt-1 transition-all duration-300 ${
                     theme === 'dark' ? 'text-cyan-400' : 'text-orange-500'
                   }`} size={20} />

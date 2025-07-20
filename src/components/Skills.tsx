@@ -1,5 +1,4 @@
 import React from 'react';
-import { Building } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { Code, Database, Microscope, Brain, Server, Palette } from 'lucide-react';

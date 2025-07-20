@@ -51,7 +51,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeSection }) => {
                   : 'bg-gradient-to-r from-orange-500 to-pink-500 bg-clip-text text-transparent'
               }`}
             >
-              &lt;Shreyan&gt;
+              Shreyan
             </motion.div>
 
             {/* Desktop Navigation */}

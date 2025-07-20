@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Building } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useScrollAnimation';
 import InteractiveCard from './InteractiveCard';
 import { ChevronDown, Download, Github, Linkedin, Mail } from 'lucide-react';
@@ -24,8 +23,8 @@ const Hero = () => {
   }, [currentIndex, fullText]);
 
   const socialLinks = [
-    { icon: Github, href: "https://github.com/Shreyan1590", label: "GitHub" },
-    { icon: Linkedin, href: "https://www.linkedin.com/in/shreyan-s2596/", label: "LinkedIn" },
+    { icon: Github, href: "#", label: "GitHub" },
+    { icon: Linkedin, href: "#", label: "LinkedIn" },
     { icon: Mail, href: "#contact", label: "Email" },
   ];
 
