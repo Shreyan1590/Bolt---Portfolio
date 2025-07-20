@@ -1,9 +1,17 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { Mail, Phone, MapPin, Github, Linkedin, Twitter, Send, CheckCircle } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
+
+interface FormData {
+  firstName: string;
+  lastName: string;
+  email: string;
+  subject: string;
+  message: string;
+}
 
 const Contact = () => {
   const { theme } = useTheme();
@@ -12,27 +20,63 @@ const Contact = () => {
     threshold: 0.1,
   });
 
-  const [formData, setFormData] = React.useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    subject: '',
-    message: ''
-  });
-  const [isSubmitted, setIsSubmitted] = React.useState(false);
-  const [isSubmitting, setIsSubmitting] = React.useState(false);
-  const [error, setError] = React.useState('');
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset
+  } = useForm<FormData>();
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const contactInfo = [
+    {
+      icon: Mail,
+      label: 'Email',
+      value: 'shreyanofficial25@gmail.com',
+      href: 'mailto:shreyanofficial25@gmail.com',
+      color: 'from-cyan-400 to-blue-500'
+    },
+    {
+      icon: Phone,
+      label: 'Phone',
+      value: '+91 9894837250',
+      href: 'tel:+919894837250',
+      color: 'from-green-400 to-teal-500'
+    },
+    {
+      icon: MapPin,
+      label: 'Location',
+      value: 'Kanchipuram, Tamil Nadu, India',
+      href: '#',
+      color: 'from-purple-400 to-pink-500'
+    },
+  ];
+
+  const socialLinks = [
+    {
+      icon: Github,
+      label: 'GitHub',
+      href: 'https://github.com/shreyan1590',
+      color: 'hover:text-gray-400'
+    },
+    {
+      icon: Linkedin,
+      label: 'LinkedIn',
+      href: 'https://www.linkedin.com/in/shreyan-s2596/',
+      color: 'hover:text-blue-400'
+    },
+    {
+      icon: Twitter,
+      label: 'Twitter',
+      href: '#',
+      color: 'hover:text-cyan-400'
+    },
+  ];
+
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
     setIsSubmitting(true);
     setError('');
 
@@ -42,18 +86,12 @@ const Contact = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(data),
       });
 
       if (response.ok) {
         setIsSubmitted(true);
-        setFormData({
-          firstName: '',
-          lastName: '',
-          email: '',
-          subject: '',
-          message: ''
-        });
+        reset();
       } else {
         throw new Error('Form submission failed');
       }
@@ -63,51 +101,6 @@ const Contact = () => {
       setIsSubmitting(false);
     }
   };
-
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: "Email",
-      value: "shreyanofficial25@gmail.com",
-      href: "mailto:shreyanofficial25@gmail.com",
-      color: "from-cyan-400 to-blue-500",
-    },
-    {
-      icon: Phone,
-      label: "Phone",
-      value: "+91 9894837250",
-      href: "tel:+919894837250",
-      color: "from-green-400 to-teal-500",
-    },
-    {
-      icon: MapPin,
-      label: "Location",
-      value: "Kanchipuram, Tamil Nadu, India",
-      href: "#",
-      color: "from-purple-400 to-pink-500",
-    },
-  ];
-
-  const socialLinks = [
-    {
-      icon: Github,
-      label: "GitHub",
-      href: "https://github.com/shreyan1590",
-      color: "hover:text-gray-400",
-    },
-    {
-      icon: Linkedin,
-      label: "LinkedIn",
-      href: "https://www.linkedin.com/in/shreyan-s2596/",
-      color: "hover:text-blue-400",
-    },
-    {
-      icon: Twitter,
-      label: "Twitter",
-      href: "#",
-      color: "hover:text-cyan-400",
-    },
-  ];
 
   return (
     <section id="contact" className={`py-20 transition-all duration-800 ${
@@ -417,18 +410,29 @@ const Contact = () => {
                   )}
                 </div>
 
+                {error && (
+                  <p className="text-red-400 text-sm">{error}</p>
+                )}
+
                 <motion.button
                   type="submit"
+                  disabled={isSubmitting}
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   className={`w-full px-6 py-3 text-white rounded-lg font-medium transition-all duration-300 flex items-center justify-center space-x-2 ${
                     theme === 'dark'
                       ? 'bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600'
                       : 'bg-gradient-to-r from-orange-500 to-pink-500 hover:from-orange-600 hover:to-pink-600'
-                  }`}
+                  } ${isSubmitting ? 'opacity-70 cursor-not-allowed' : ''}`}
                 >
-                  <Send size={20} />
-                  <span>Send Message</span>
+                  {isSubmitting ? (
+                    <span>Sending...</span>
+                  ) : (
+                    <>
+                      <Send size={20} />
+                      <span>Send Message</span>
+                    </>
+                  )}
                 </motion.button>
               </form>
             )}
