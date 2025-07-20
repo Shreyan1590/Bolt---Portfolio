@@ -1,7 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { GraduationCap, Calendar, MapPin, Award, Code, Microscope, Brain, Target, Users, BookOpen, School } from 'lucide-react';
+import { GraduationCap, Calendar, MapPin, Code, Microscope, Brain, Target, Users, BookOpen, School } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
 
 const About = () => {
